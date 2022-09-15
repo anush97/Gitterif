@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>index.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">index.template.scala</span></div><h1>index.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="pc" id="L24">object index extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template3[LinkedHashMap[String, ArrayList[Models.GithubResult]],List[String],play.mvc.Http.Request,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*1.2*/(results: LinkedHashMap[String, ArrayList[Models.GithubResult]], keys: List[String], request: play.mvc.Http.Request):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L28">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L32">Seq[Any](format.raw/*1.118*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L33">	&quot;&quot;&quot;),format.raw/*2.2*/(&quot;&quot;&quot;&lt;script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'&gt;&lt;/script&gt;</span>
+<span class="fc" id="L34">	&lt;script type='text/javascript' src='&quot;&quot;&quot;),_display_(/*3.39*/routes/*3.45*/.Assets.versioned(&quot;javascripts/index.js&quot;)),format.raw/*3.86*/(&quot;&quot;&quot;'&gt;&lt;/script&gt;  </span>
+
+
+<span class="fc" id="L37">&lt;section data-ws-url=&quot;&quot;&quot;&quot;),_display_(/*6.24*/routes/*6.30*/.HomeController.ws.webSocketURL(request)),format.raw/*6.70*/(&quot;&quot;&quot;&quot; style=&quot; margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px&quot;&gt;</span>
+  &lt;div class=&quot;header&quot;&gt;
+    
+      &lt;div style=&quot;border:dotted 0.1px white;text-align:center&quot;&gt;
+      		
+      		&lt;h1 style=&quot;font-size: 50px;&quot; &gt;&lt;span style=&quot; font-size: 50px; font-family: Georgia;&quot;&gt;Gitterific&lt;/span&gt; &lt;/h1&gt;
+      		&lt;form name=&quot;search&quot; id=&quot;form&quot; action=&quot;/&quot; method=&quot;GET&quot;&gt;
+	      	&lt;input style=&quot;text-align: left;margin: 0 px 10px;padding: 15px; font-size: 20px;&quot; id=&quot;user&quot; name=&quot;search&quot; type=&quot;text&quot; placeholder=&quot;enter name&quot;&gt;
+	      	&lt;button style=&quot;background-color: #42a386;
+          border: none;
+          color: white;
+          padding: 17px 25px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+	      	&lt;/form&gt;
+      &lt;/div&gt;
+      
+  &lt;/div&gt;
+  
+  
+<span class="fc bfc" id="L61" title="All 2 branches covered.">  &quot;&quot;&quot;),_display_(/*30.4*/if(!results.isEmpty())/*30.26*/ {_display_(Seq[Any](format.raw/*30.28*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L62">  &quot;&quot;&quot;),format.raw/*31.3*/(&quot;&quot;&quot;&lt;h5 style=&quot;margin-left: 25px;&quot;&gt;Showing &quot;&quot;&quot;),_display_(/*31.43*/keys/*31.47*/.size()),format.raw/*31.54*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*31.55*/(&quot;&quot;&quot;Results&lt;/h5&gt;</span>
+
+  	
+<span class="fc" id="L65">      &quot;&quot;&quot;),_display_(/*34.8*/for(key &lt;- keys) yield /*34.24*/{_display_(Seq[Any](format.raw/*34.25*/(&quot;&quot;&quot;</span>
+      &quot;&quot;&quot;),format.raw/*35.7*/(&quot;&quot;&quot;&lt;div class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+      &lt;div style=&quot;padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;&quot;&gt;
+       &lt;center&gt; &lt;span&gt;Showing Results of &lt;h1 style=&quot;display:inline-block;margin-left: 10px;&quot;&gt;&quot;&quot;&quot;),_display_(/*37.95*/key),format.raw/*37.98*/(&quot;&quot;&quot;&lt;/h1&gt; &lt;/span&gt;&lt;/center&gt;
+        &lt;table style=&quot;width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+            &lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+              &lt;tr&gt;
+                &lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Owner&lt;/th&gt;
+                &lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Repository&lt;/th&gt;
+                &lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Topics&lt;/th&gt;
+
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+              
+              &quot;&quot;&quot;),_display_(/*52.16*/for(obj &lt;- results.get(key) ) yield /*52.45*/{_display_(Seq[Any](format.raw/*52.46*/(&quot;&quot;&quot;
+                &quot;&quot;&quot;),format.raw/*53.17*/(&quot;&quot;&quot;&lt;tr style=&quot;height: 50px &quot;&gt;
+                &lt;td id=&quot;Owner&quot;&quot;&quot;),_display_(/*54.31*/obj/*54.34*/.repoID),format.raw/*54.41*/(&quot;&quot;&quot;&quot; style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;&lt;a href=&quot;/user/&quot;&quot;&quot;),_display_(/*54.105*/obj/*54.108*/.ownerName),format.raw/*54.118*/(&quot;&quot;&quot;&quot;&gt;&quot;&quot;&quot;),_display_(/*54.121*/obj/*54.124*/.ownerName),format.raw/*54.134*/(&quot;&quot;&quot;&lt;/a&gt;&lt;/td&gt;
+                &lt;td  id=&quot;Name&quot;&quot;&quot;),_display_(/*55.31*/obj/*55.34*/.repoID),format.raw/*55.41*/(&quot;&quot;&quot;&quot; style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;&lt;a href=&quot;/repo/&quot;&quot;&quot;),_display_(/*55.105*/obj/*55.108*/.queryString),format.raw/*55.120*/(&quot;&quot;&quot;/&quot;&quot;&quot;),_display_(/*55.122*/obj/*55.125*/.repoID),format.raw/*55.132*/(&quot;&quot;&quot;&quot;&gt;&quot;&quot;&quot;),_display_(/*55.135*/obj/*55.138*/.repoName),format.raw/*55.147*/(&quot;&quot;&quot;&lt;/a&gt;&lt;/td&gt;
+                &lt;td id=&quot;Topics&quot;&quot;&quot;),_display_(/*56.32*/obj/*56.35*/.repoID),format.raw/*56.42*/(&quot;&quot;&quot;&quot; style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;
+                  &quot;&quot;&quot;),_display_(/*57.20*/for(topic &lt;- obj.returnTopics()) yield /*57.52*/{_display_(Seq[Any](format.raw/*57.53*/(&quot;&quot;&quot;
+                   &quot;&quot;&quot;),format.raw/*58.20*/(&quot;&quot;&quot;&lt;div style=&quot;display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 4px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;&quot;&gt;&lt;a style=&quot;color :#dee2e1;&quot; href=&quot;/topic/&quot;&quot;&quot;),_display_(/*58.226*/topic),format.raw/*58.231*/(&quot;&quot;&quot;&quot;&gt; &quot;&quot;&quot;),_display_(/*58.235*/topic),format.raw/*58.240*/(&quot;&quot;&quot;&lt;/a&gt; &lt;/div&gt; 
+                  &quot;&quot;&quot;)))}),format.raw/*59.20*/(&quot;&quot;&quot;
+                &quot;&quot;&quot;),format.raw/*60.17*/(&quot;&quot;&quot;&lt;/td&gt;
+              &lt;/tr&gt;
+              &quot;&quot;&quot;)))}),format.raw/*62.16*/(&quot;&quot;&quot;
+               
+            
+            &quot;&quot;&quot;),format.raw/*65.13*/(&quot;&quot;&quot;&lt;/tbody&gt; 
+          &lt;/table&gt;
+        &lt;/div&gt;
+         &lt;/div&gt;
+        
+<span class="fc" id="L101">        &quot;&quot;&quot;)))}),format.raw/*70.10*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L103">&quot;&quot;&quot;)))}),format.raw/*72.2*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L105">&quot;&quot;&quot;),format.raw/*74.1*/(&quot;&quot;&quot;&lt;/section&gt;</span>
+&lt;script&gt;
+  
+  
+
+<span class="fc" id="L110">  (function() &quot;&quot;&quot;),format.raw/*79.15*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*79.16*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L111">  &quot;&quot;&quot;),format.raw/*80.3*/(&quot;&quot;&quot;$(function() &quot;&quot;&quot;),format.raw/*80.16*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*80.17*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L112">    &quot;&quot;&quot;),format.raw/*81.5*/(&quot;&quot;&quot;var ws;</span>
+    console.log(&quot;Inside Custom Script&quot;);
+    ws = new WebSocket($(&quot;section&quot;).data(&quot;ws-url&quot;));
+<span class="fc" id="L115">    return ws.onmessage = function(event) &quot;&quot;&quot;),format.raw/*84.43*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*84.44*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L116">      &quot;&quot;&quot;),format.raw/*85.7*/(&quot;&quot;&quot;var message;</span>
+      message = JSON.parse(event.data);
+<span class="fc" id="L118">      if(message.status == &quot;No-Change&quot;)&quot;&quot;&quot;),format.raw/*87.40*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*87.41*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L119">        &quot;&quot;&quot;),format.raw/*88.9*/(&quot;&quot;&quot;console.log(&quot;No Change from last Update!&quot;);</span>
+        $('#time').append(message.status + &quot;&lt;br/&gt;&quot;);
+<span class="fc" id="L121">      &quot;&quot;&quot;),format.raw/*90.7*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*90.8*/(&quot;&quot;&quot;else&quot;&quot;&quot;),format.raw/*90.12*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*90.13*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L122">        &quot;&quot;&quot;),format.raw/*91.9*/(&quot;&quot;&quot;console.log(message.value);   </span>
+        var allChanges = JSON.parse(message.value);
+        console.log(&quot;Updating &quot;+ message.status + &quot;Repositories&quot; );
+<span class="fc" id="L125">        for(var i =0; i&lt; parseInt(message.status); i++)&quot;&quot;&quot;),format.raw/*94.56*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*94.57*/(&quot;&quot;&quot;                    </span>
+<span class="fc" id="L126">             &quot;&quot;&quot;),format.raw/*95.14*/(&quot;&quot;&quot;var githubResult = allChanges[i];</span>
+             console.log(githubResult);
+             $(&quot;#Owner&quot;+ githubResult.repoToChange).html(&quot;&lt;a href='/user/&quot;+ githubResult.ownerName + &quot;'&gt;&quot;+ githubResult.ownerName+&quot;&lt;/a&gt;&quot;);
+             $(&quot;#Name&quot;+ githubResult.repoToChange).html(&quot;&lt;a href='/repo/&quot;+ githubResult.queryString+&quot;/&quot;+ githubResult.repoID +&quot;'&gt;&quot; + githubResult.repoName+ &quot;&lt;/a&gt;&quot;);
+             var data= '';
+             var topics= githubResult.topics.substring(1, githubResult.topics.length-1).split(&quot;,&quot;);
+             console.log(&quot;Topics :: &quot;+topics+ &quot; : &quot; +topics.length);
+<span class="fc" id="L133">             if(topics.length&gt;1)&quot;&quot;&quot;),format.raw/*102.33*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*102.34*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L134">              &quot;&quot;&quot;),format.raw/*103.15*/(&quot;&quot;&quot;console.log(&quot;Topics :: &quot; +topics[4]);</span>
+<span class="fc" id="L135">               for(var j=0; j&lt;topics.length; j++)&quot;&quot;&quot;),format.raw/*104.50*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*104.51*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L136">                  &quot;&quot;&quot;),format.raw/*105.19*/(&quot;&quot;&quot;data += &quot;&lt;div style='display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 4px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;'&gt;&lt;a style='color :#dee2e1;' href='/topic/&quot; + topics[j] + &quot;'&gt; &quot; + topics[j] + &quot;&lt;/a&gt; &lt;/div&gt; &quot;;</span>
+<span class="fc" id="L137">               &quot;&quot;&quot;),format.raw/*106.16*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*106.17*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L138">               &quot;&quot;&quot;),format.raw/*107.16*/(&quot;&quot;&quot;$(&quot;#Topics&quot;+ githubResult.repoToChange).html(data);</span>
+<span class="fc" id="L139">             &quot;&quot;&quot;),format.raw/*108.14*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*108.15*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L140">        &quot;&quot;&quot;),format.raw/*109.9*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*109.10*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L141">      &quot;&quot;&quot;),format.raw/*110.7*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*110.8*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L142">    &quot;&quot;&quot;),format.raw/*111.5*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*111.6*/(&quot;&quot;&quot;;</span>
+<span class="fc" id="L143">  &quot;&quot;&quot;),format.raw/*112.3*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*112.4*/(&quot;&quot;&quot;);</span>
+
+<span class="fc" id="L145">&quot;&quot;&quot;),format.raw/*114.1*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*114.2*/(&quot;&quot;&quot;).call(this);</span>
+
+
+&lt;/script&gt;
+
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="fc" id="L155">  def render(results:LinkedHashMap[String, ArrayList[Models.GithubResult]],keys:List[String],request:play.mvc.Http.Request): play.twirl.api.HtmlFormat.Appendable = apply(results,keys,request)</span>
+
+<span class="nc" id="L157">  def f:((LinkedHashMap[String, ArrayList[Models.GithubResult]],List[String],play.mvc.Http.Request) =&gt; play.twirl.api.HtmlFormat.Appendable) = (results,keys,request) =&gt; apply(results,keys,request)</span>
+
+<span class="nc" id="L159">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  SOURCE: app/views/index.scala.html
+                  HASH: 7e35748df8f45fefc33a04fc7a0ef117e7129564
+                  MATRIX: 989-&gt;1|1201-&gt;117|1230-&gt;120|1386-&gt;250|1400-&gt;256|1461-&gt;297|1529-&gt;339|1543-&gt;345|1603-&gt;385|2613-&gt;1369|2644-&gt;1391|2684-&gt;1393|2715-&gt;1397|2782-&gt;1437|2795-&gt;1441|2823-&gt;1448|2852-&gt;1449|2906-&gt;1477|2938-&gt;1493|2977-&gt;1494|3012-&gt;1502|3325-&gt;1788|3349-&gt;1791|4059-&gt;2474|4104-&gt;2503|4143-&gt;2504|4189-&gt;2522|4274-&gt;2580|4286-&gt;2583|4314-&gt;2590|4406-&gt;2654|4419-&gt;2657|4451-&gt;2667|4482-&gt;2670|4495-&gt;2673|4527-&gt;2683|4595-&gt;2724|4607-&gt;2727|4635-&gt;2734|4727-&gt;2798|4740-&gt;2801|4774-&gt;2813|4804-&gt;2815|4817-&gt;2818|4846-&gt;2825|4877-&gt;2828|4890-&gt;2831|4921-&gt;2840|4990-&gt;2882|5002-&gt;2885|5030-&gt;2892|5126-&gt;2961|5174-&gt;2993|5213-&gt;2994|5262-&gt;3015|5496-&gt;3221|5523-&gt;3226|5555-&gt;3230|5582-&gt;3235|5646-&gt;3268|5692-&gt;3286|5766-&gt;3329|5839-&gt;3374|5953-&gt;3457|5988-&gt;3462|6019-&gt;3466|6093-&gt;3512|6122-&gt;3513|6153-&gt;3517|6194-&gt;3530|6223-&gt;3531|6256-&gt;3537|6431-&gt;3684|6460-&gt;3685|6495-&gt;3693|6617-&gt;3787|6646-&gt;3788|6683-&gt;3798|6815-&gt;3903|6843-&gt;3904|6875-&gt;3908|6904-&gt;3909|6941-&gt;3919|7178-&gt;4128|7207-&gt;4129|7270-&gt;4164|7912-&gt;4777|7942-&gt;4778|7987-&gt;4794|8104-&gt;4882|8134-&gt;4883|8183-&gt;4903|8494-&gt;5185|8524-&gt;5186|8570-&gt;5203|8665-&gt;5269|8695-&gt;5270|8733-&gt;5280|8763-&gt;5281|8799-&gt;5289|8828-&gt;5290|8862-&gt;5296|8891-&gt;5297|8924-&gt;5302|8953-&gt;5303|8987-&gt;5309|9016-&gt;5310
+                  LINES: 27-&gt;1|32-&gt;1|33-&gt;2|34-&gt;3|34-&gt;3|34-&gt;3|37-&gt;6|37-&gt;6|37-&gt;6|61-&gt;30|61-&gt;30|61-&gt;30|62-&gt;31|62-&gt;31|62-&gt;31|62-&gt;31|62-&gt;31|65-&gt;34|65-&gt;34|65-&gt;34|66-&gt;35|68-&gt;37|68-&gt;37|83-&gt;52|83-&gt;52|83-&gt;52|84-&gt;53|85-&gt;54|85-&gt;54|85-&gt;54|85-&gt;54|85-&gt;54|85-&gt;54|85-&gt;54|85-&gt;54|85-&gt;54|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|87-&gt;56|87-&gt;56|87-&gt;56|88-&gt;57|88-&gt;57|88-&gt;57|89-&gt;58|89-&gt;58|89-&gt;58|89-&gt;58|89-&gt;58|90-&gt;59|91-&gt;60|93-&gt;62|96-&gt;65|101-&gt;70|103-&gt;72|105-&gt;74|110-&gt;79|110-&gt;79|111-&gt;80|111-&gt;80|111-&gt;80|112-&gt;81|115-&gt;84|115-&gt;84|116-&gt;85|118-&gt;87|118-&gt;87|119-&gt;88|121-&gt;90|121-&gt;90|121-&gt;90|121-&gt;90|122-&gt;91|125-&gt;94|125-&gt;94|126-&gt;95|133-&gt;102|133-&gt;102|134-&gt;103|135-&gt;104|135-&gt;104|136-&gt;105|137-&gt;106|137-&gt;106|138-&gt;107|139-&gt;108|139-&gt;108|140-&gt;109|140-&gt;109|141-&gt;110|141-&gt;110|142-&gt;111|142-&gt;111|143-&gt;112|143-&gt;112|145-&gt;114|145-&gt;114
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

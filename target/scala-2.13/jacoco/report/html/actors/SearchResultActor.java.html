@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SearchResultActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">actors</a> &gt; <span class="el_source">SearchResultActor.java</span></div><h1>SearchResultActor.java</h1><pre class="source lang-java linenums">package actors;
+
+import akka.actor.AbstractActor;
+import akka.actor.AbstractActorWithTimers;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.inject.Inject;
+
+import play.Logger;
+import play.libs.Json;
+import Models.GithubResult;
+import Models.RepositoryProfile;
+import Models.SearchResultHelper;
+import services.RepoProfileService;
+import Utils.Cache;
+import actors.RepoProfileActor.RepoProfileInfo;
+import java.util.concurrent.TimeUnit;
+import scala.concurrent.duration.Duration;
+
+public class SearchResultActor extends AbstractActorWithTimers{ 
+		  private Set&lt;ActorRef&gt; replyActors;
+		  private SearchResultInfo srf;
+<span class="fc" id="L34">		  static boolean IS_TIMER_RUNNING= false;</span>
+		  LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; currentResultList;
+<span class="fc" id="L36">		  HashMap&lt;String, ArrayList&lt;String&gt;&gt; currentRepoList = new HashMap&lt;String, ArrayList&lt;String&gt;&gt;(); ;</span>
+		  
+		  
+	static public class SearchResultInfo{
+		public final String queryString;
+		public final Cache cache;
+		public final SearchResultHelper srHelper;
+<span class="fc" id="L43">		public SearchResultInfo(String queryString, Cache cache, SearchResultHelper srHelper) {</span>
+<span class="fc" id="L44">			this.queryString = queryString;</span>
+<span class="fc" id="L45">			this.cache = cache;	</span>
+<span class="fc" id="L46">			this.srHelper = srHelper;</span>
+<span class="fc" id="L47">		}</span>
+	}
+	
+<span class="fc" id="L50">	private SearchResultActor() {</span>
+<span class="fc" id="L51">		this.replyActors = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L52">	}</span>
+	
+
+    public static final class Tick{
+    	SearchResultInfo savedSRF;
+<span class="fc" id="L57">    	public Tick(SearchResultInfo savedSRF) {</span>
+<span class="fc" id="L58">    		this.savedSRF = savedSRF;</span>
+<span class="fc" id="L59">    	}</span>
+    }
+	
+    
+<span class="fc" id="L63">	 static public class RegisterMsg{</span>
+
+	    }
+
+	 public void preStart(){
+<span class="fc" id="L68">	    }</span>
+	
+	public static Props getProps() {
+<span class="fc" id="L71">		return Props.create(SearchResultActor.class);</span>
+	}
+	
+	
+	@Override
+	public Receive createReceive() {
+		// TODO Auto-generated method stub
+<span class="fc" id="L78">		return receiveBuilder()</span>
+<span class="fc" id="L79">				.match(SearchResultInfo.class, this::sendSearchResults )</span>
+<span class="fc" id="L80">				.match(RegisterMsg.class, msg -&gt; replyActors.add(sender()))</span>
+<span class="fc" id="L81">				.match(Tick.class, msg -&gt; UpdateSearchResults(msg.savedSRF))</span>
+<span class="fc" id="L82">				.build();</span>
+	}
+	
+	private void sendSearchResults(SearchResultInfo sri) {
+		try {
+<span class="fc" id="L87">			LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; allResultList = new LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;();</span>
+<span class="fc" id="L88">			System.out.println(&quot;Inside SearchActor:: Key =&quot;+ sri.queryString);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			if(sri.queryString.equals(&quot;none&quot;)) {</span>
+<span class="fc" id="L90">				 sender().tell(allResultList, self());</span>
+			}else {
+<span class="fc" id="L92">				allResultList = sri.srHelper.searchGithub(sri.queryString, sri.cache, true);					</span>
+<span class="fc" id="L93">			    System.out.println(&quot;SearchResult-ACTOR ::: KeySet ::&quot;+ allResultList.keySet());</span>
+<span class="fc" id="L94">			    currentResultList = allResultList;</span>
+<span class="fc" id="L95">			    updateRepoIDs();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			    if(!IS_TIMER_RUNNING) {</span>
+<span class="fc" id="L97">			        getTimers().startPeriodicTimer(&quot;Timer&quot;, new Tick(sri), Duration.create(15, TimeUnit.SECONDS));</span>
+<span class="fc" id="L98">			        IS_TIMER_RUNNING=true;</span>
+			    }
+<span class="fc" id="L100">			    sender().tell(allResultList, self());</span>
+			}
+			
+		    
+		}
+<span class="nc" id="L105">		catch(InterruptedException e) {</span>
+<span class="nc" id="L106">			sender().tell(new SearchResultInfo(sri.queryString, sri.cache, sri.srHelper), self());</span>
+		}
+<span class="nc" id="L108">		catch(ExecutionException e) {</span>
+<span class="nc" id="L109">			sender().tell(new SearchResultInfo(sri.queryString, sri.cache, sri.srHelper), self());</span>
+<span class="pc" id="L110">		}</span>
+
+
+<span class="fc" id="L113">	}</span>
+	
+	@SuppressWarnings(&quot;deprecation&quot;)
+	private void UpdateSearchResults(SearchResultInfo sri) {
+		try {
+<span class="fc" id="L118">			Boolean Has_Changed = false;</span>
+			String OutputMSG;
+<span class="fc" id="L120">			Integer changeCount=0;</span>
+<span class="fc" id="L121">			LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; allResultList = new LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;();</span>
+<span class="fc" id="L122">			System.out.println(&quot;Inside SearchActorUPDATE-ACTOR:: Key =&quot;+ sri.queryString);</span>
+			
+<span class="fc" id="L124">			allResultList = sri.srHelper.searchGithub(sri.queryString, sri.cache, false);					</span>
+<span class="fc" id="L125">		    System.out.println(&quot;SearchResultUPDATE-ACTOR ::: KeySet ::&quot;+ allResultList.keySet());</span>
+<span class="fc" id="L126">		    System.out.println(&quot;SearchResultUPDATE-ACTOR ::: replyActors ::&quot;+ replyActors.size());</span>
+		    
+<span class="fc" id="L128">		    final ObjectNode response = Json.newObject();</span>
+		    
+<span class="fc" id="L130">		    ArrayList&lt;ObjectNode&gt; arrayOfChanges = new ArrayList&lt;&gt;();</span>
+	
+<span class="fc bfc" id="L132" title="All 2 branches covered.">	    	for(String key : allResultList.keySet()) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">	    		for(int i =0; i&lt; allResultList.get(key).size();i++) {</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">	    			if(!currentRepoList.get(key).contains(allResultList.get(key).get(i).repoID)){</span>
+<span class="nc" id="L135">	    				Has_Changed = true;</span>
+<span class="nc" id="L136">	    				 changeCount++;</span>
+<span class="nc" id="L137">	    				 ObjectNode ChangeObject = Json.newObject(); </span>
+<span class="nc" id="L138">	    				 ChangeObject.put(&quot;queryString&quot;, allResultList.get(key).get(i).queryString);</span>
+<span class="nc" id="L139">	    				 ChangeObject.put(&quot;repoID&quot;, allResultList.get(key).get(i).repoID);</span>
+<span class="nc" id="L140">	    				 ChangeObject.put(&quot;ownerName&quot;, allResultList.get(key).get(i).ownerName);</span>
+<span class="nc" id="L141">	    				 ChangeObject.put(&quot;repoName&quot;, allResultList.get(key).get(i).repoName);</span>
+<span class="nc" id="L142">	    				 ChangeObject.put(&quot;topics&quot;, allResultList.get(key).get(i).returnTopics().toString());</span>
+<span class="nc" id="L143">	    				 ChangeObject.put(&quot;repoToChange&quot;,currentRepoList.get(key).get(changeCount));		    				 </span>
+<span class="nc" id="L144">	    				 arrayOfChanges.add(ChangeObject);		    				 </span>
+	    		}
+	    	}
+	    	
+<span class="fc" id="L148">	    	}</span>
+		    
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		    if(Has_Changed) {</span>
+<span class="nc" id="L151">		    	System.out.println(changeCount + &quot; - Changes&quot;);</span>
+<span class="nc" id="L152">		    	response.put(&quot;status&quot;, changeCount.toString());</span>
+<span class="nc" id="L153">				 response.put(&quot;value&quot;, arrayOfChanges.toString());</span>
+<span class="nc" id="L154">				 currentResultList = allResultList;</span>
+<span class="nc" id="L155">				 updateRepoIDs();</span>
+		    }else {
+<span class="fc" id="L157">		    	System.out.println(&quot;No Change in List&quot;);</span>
+<span class="fc" id="L158">		    	OutputMSG = &quot;No-Change&quot;;</span>
+<span class="fc" id="L159">		    	response.put(&quot;status&quot;, &quot;No-Change&quot;);</span>
+		    }
+		    
+<span class="fc" id="L162">		    SearchSupervisor.GithubSearchMessage tMsg = new SearchSupervisor.GithubSearchMessage(response);</span>
+<span class="fc" id="L163">		    replyActors.forEach(ar -&gt; ar.tell(tMsg, self()));</span>
+				    
+		}
+<span class="nc" id="L166">		catch(InterruptedException e) {</span>
+<span class="nc" id="L167">			sender().tell(new SearchResultInfo(sri.queryString, sri.cache, sri.srHelper), self());</span>
+		}
+<span class="nc" id="L169">		catch(ExecutionException e) {</span>
+<span class="nc" id="L170">			sender().tell(new SearchResultInfo(sri.queryString, sri.cache, sri.srHelper), self());</span>
+<span class="pc" id="L171">		}</span>
+
+
+<span class="fc" id="L174">	}</span>
+	
+	
+	private void updateRepoIDs() {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for(String key : currentResultList.keySet()) {</span>
+<span class="fc" id="L179">			ArrayList&lt;String&gt; repoIDListforString = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">    		for(int i =0; i&lt; currentResultList.get(key).size();i++) {   				   </span>
+<span class="fc" id="L181">    			repoIDListforString.add(currentResultList.get(key).get(i).repoID);</span>
+    		}
+<span class="fc" id="L183">    		currentRepoList.put(key, repoIDListforString);</span>
+<span class="fc" id="L184">    	}</span>
+    	
+<span class="fc" id="L186">    	}</span>
+	}
+	
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,307 @@
+sbt compile
+clean
+update
+eclipse with source=true
+compile
+run
+exit
+eclipse
+run
+exit
+run
+eclipse
+run
+eclipse
+run
+sbt run
+run
+eclipse
+run
+eclip
+eclipse
+run
+test
+run
+test
+eclipse
+run
+test
+testOnly TopicResultHelperTest
+testOnly CommitsResultTest
+test *
+test*
+sbt -v
+test
+clean
+compile
+test
+sbt
+test
+jacoco
+test
+jacoco
+test
+eclipse
+compile
+eclipse
+test
+jacoco
+test
+jacoco
+test
+jacoco
+test
+jacoco
+test
+jacoco
+clean
+compile
+eclipse
+test
+compile
+test
+clean 
+compile
+test
+jacoco
+compile
+test
+clean
+compile
+test
+clean
+compile
+test
+clean
+compile
+clean
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+clean
+compile
+run
+clean
+compile
+test
+jacoco
+test
+jacoco
+test
+clean
+compile
+test
+clean
+compile
+run
+compile
+test
+jacoco
+compile
+test
+compile
+test
+@Before
+public void initAll() {
+//all titles of issues stored 
+mock_issuetitles= (ArrayList<String>) Arrays.asList("Add Hierholzer algorithm (finding an eulerian circuit in a graph)",
+                  " No __init__.py in `Fractals`",
+                  " Implement Hierholzer algorithm (finding eulerian circuit on graph)",
+                  " Add flood fill algorithm implementation",
+                  "Update merge_insertion_sort.py",
+                  "Update merge_insertion_sort.py to solve #5774",
+                  " Add missing type annotations in `matrix` directory",
+                  " Added TrashBin Problem","feat: Add basic issue forms",
+                  "Add-README-files-3/8", 
+                  "Add missing type annotations for `strings` directory", 
+                  "Improve Project Euler problem 074 solution 2",
+                  "Update `sorts/bubble_sort.py`",
+                  "Added volume of Ellipsoid and Tetrahedron",
+                  "Fix `sorts/bucket_sort.py` implementation",
+                  "Added: pressure.py",
+                  " Rewrite queue to make it more meaningful and readable",
+                  "add type hints?","Merge insertion sort doesn't work",
+                  "Improve Project Euler problem 203 solution 1",
+                  "Improve Project Euler problem 030 solution 1");
+@Before
+public void initAll() {
+//all titles of issues stored 
+mock_issuetitles= (ArrayList<String>) Arrays.asList("Add Hierholzer algorithm (finding an eulerian circuit in a graph)",
+                  " No __init__.py in `Fractals`",
+                  " Implement Hierholzer algorithm (finding eulerian circuit on graph)",
+                  " Add flood fill algorithm implementation",
+                  "Update merge_insertion_sort.py",
+                  "Update merge_insertion_sort.py to solve #5774",
+                  " Add missing type annotations in `matrix` directory",
+                  " Added TrashBin Problem","feat: Add basic issue forms",
+                  "Add-README-files-3/8", 
+                  "Add missing type annotations for `strings` directory", 
+                  "Improve Project Euler problem 074 solution 2",
+                  "Update `sorts/bubble_sort.py`",
+                  "Added volume of Ellipsoid and Tetrahedron",
+                  "Fix `sorts/bucket_sort.py` implementation",
+                  "Added: pressure.py",
+                  " Rewrite queue to make it more meaningful and readable",
+                  "add type hints?","Merge insertion sort doesn't work",
+                  "Improve Project Euler problem 203 solution 1",
+                  "Improve Project Euler problem 030 solution 1");
+clean
+compile
+test
+jacoco
+test
+jacoco
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+jacoco
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+jacoco
+test
+jacoco
+compile
+test
+jacoco
+compile
+test
+jacoco
+compile
+run
+compile
+run
+test
+clean
+compile
+test
+compile
+test
+compile
+test
+jacoco
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+run
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+jacoco
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+run
+cls
+clean
+compile
+test
+clean
+compile
+test
+compile
+test
+compile
+test
+jacoco
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+compile
+test
+run
+test
+run
+compile
+test
+run
+test
+run
+test
+jacoco

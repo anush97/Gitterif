@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>commits.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">commits.template.scala</span></div><h1>commits.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="pc" id="L24">object commits extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template3[Models.CommitsResult,List[String],Map[String, Integer],play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*1.2*/(results: Models.CommitsResult, keys: List[String], commitData: Map[String, Integer]):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L28">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L32">Seq[Any](format.raw/*1.87*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L34">&quot;&quot;&quot;),format.raw/*3.1*/(&quot;&quot;&quot;&lt;section style=&quot; margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px&quot;&gt;</span>
+  &lt;div class=&quot;header&quot; style=&quot;padding: 30px;
+	  text-align: center;
+	  background: #1abc9c;
+	  color: white;
+	  font-size: 30px;&quot;&gt;
+    
+  		&lt;h2&gt; Repository Commit Statistics&lt;/h2&gt;
+	&lt;/div&gt;
+		  &lt;div class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+			&lt;div style=&quot;padding: 5px;margin: 20px;background-color:color:rgb(18, 105, 69);border-radius: 5px;&quot;&gt;
+			  &lt;table style=&quot;
+				border-collapse: collapse;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+				  
+				  &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+					&lt;tr style=&quot;height: 50px ;border: 1px solid rgb(20, 107, 71);&quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Maximum no.of additions &lt;/td&gt;
+<span class="fc" id="L52">						&lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*21.60*/results/*21.67*/.maxAdd),format.raw/*21.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+  					&lt;/tr&gt; 
+  					&lt;tr   style=&quot;height: 50px ;border: 1px solid rgb(20, 107, 71);&quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Minimum no.of additions&lt;/td&gt;
+<span class="fc" id="L56">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*25.61*/results/*25.68*/.minAdd),format.raw/*25.75*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+					&lt;/tr&gt;
+					&lt;tr  style=&quot;height: 50px ;border: 1px solid rgb(20, 107, 71);&quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Average no.of additions &lt;/td&gt;
+<span class="fc" id="L60">						&lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*29.60*/results/*29.67*/.avgAdd),format.raw/*29.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+					 &lt;/tr&gt; 
+
+					  &lt;tr  style=&quot;height: 50px ;border: 1px solid rgb(20, 107, 71);&quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Maximum no.of deletions&lt;/td&gt;
+<span class="fc" id="L65">						&lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*34.60*/results/*34.67*/.maxDel),format.raw/*34.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+  					  &lt;/tr&gt;
+  					   &lt;tr  style=&quot;height: 50px ;border: 1px solid rgb(20, 107, 71);&quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Minumum no.of deletions&lt;/td&gt;
+<span class="fc" id="L69">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*38.61*/results/*38.68*/.minDel),format.raw/*38.75*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+						&lt;/tr&gt;
+						&lt;tr  style=&quot;height: 50px ;border: 1px solid rgb(20, 107, 71);&quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Average no.of deletions&lt;/td&gt;
+<span class="fc" id="L73">						&lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*42.60*/results/*42.67*/.avgDel),format.raw/*42.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+					  &lt;/tr&gt; 
+
+ 
+				  &lt;/tbody&gt; 
+				&lt;/table&gt;
+			&lt;/div&gt;
+
+	
+	
+	 
+    
+      &lt;div style=&quot;padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;&quot;&gt;
+<span class="fc" id="L86">    &lt;center&gt;   &lt;h3 style=&quot;margin-left: 25px; color:rgb(18, 105, 69);&quot;&gt;Showing Top &quot;&quot;&quot;),_display_(/*55.84*/keys/*55.88*/.size()),format.raw/*55.95*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*55.96*/(&quot;&quot;&quot;users with highest no.of commits&lt;/h3&gt; &lt;/center&gt;</span>
+        &lt;table style=&quot;width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+            &lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+              &lt;tr&gt;
+                &lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;User name&lt;/th&gt;
+                &lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Commits count&lt;/th&gt;
+				&lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;User profile link&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+              
+<span class="fc" id="L100">             &quot;&quot;&quot;),_display_(/*69.15*/for(key&lt;-keys) yield /*69.29*/{_display_(Seq[Any](format.raw/*69.30*/(&quot;&quot;&quot;</span>
+					&quot;&quot;&quot;),format.raw/*70.6*/(&quot;&quot;&quot;&lt;tr style=&quot;height: 50px &quot;&gt;									
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&quot;&quot;&quot;),_display_(/*71.99*/key),format.raw/*71.102*/(&quot;&quot;&quot;&lt;/td&gt;
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&quot;&quot;&quot;),_display_(/*72.99*/commitData/*72.109*/.get(key)),format.raw/*72.118*/(&quot;&quot;&quot;&lt;/td&gt;	
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&lt;a href='/user/&quot;&quot;&quot;),_display_(/*73.114*/key),format.raw/*73.117*/(&quot;&quot;&quot;'&gt;&quot;&quot;&quot;),_display_(/*73.120*/key),format.raw/*73.123*/(&quot;&quot;&quot;&lt;/td&gt;					
+					&lt;/tr&gt;				
+<span class="fc" id="L106">				&quot;&quot;&quot;)))}),format.raw/*75.6*/(&quot;&quot;&quot;</span>
+               
+            
+<span class="fc" id="L109">            &quot;&quot;&quot;),format.raw/*78.13*/(&quot;&quot;&quot;&lt;/tbody&gt; </span>
+          &lt;/table&gt;
+        &lt;/div&gt;
+         &lt;/div&gt;
+	
+		
+&lt;/section&gt;
+
+	&lt;button style=&quot;display: block;
+	position: fixed;
+	top: 20px;
+	left: 30px;
+	z-index: 99;
+	font-size: 15px;
+	border: none;
+	outline: none;
+	background-color: rgb(218, 218, 218);
+	color: rgb(7, 75, 18) ;
+	cursor: pointer;
+	padding: 5px;&quot; onclick=&quot;history.back()&quot; title=&quot;Go Back&quot;&gt; ⬅ Back &lt;/button&gt;
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="fc" id="L134">  def render(results:Models.CommitsResult,keys:List[String],commitData:Map[String, Integer]): play.twirl.api.HtmlFormat.Appendable = apply(results,keys,commitData)</span>
+
+<span class="nc" id="L136">  def f:((Models.CommitsResult,List[String],Map[String, Integer]) =&gt; play.twirl.api.HtmlFormat.Appendable) = (results,keys,commitData) =&gt; apply(results,keys,commitData)</span>
+
+<span class="nc" id="L138">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  SOURCE: app/views/commits.scala.html
+                  HASH: 3c432fbfffeb026f3bad6da7e83c52486c52bb67
+                  MATRIX: 957-&gt;1|1137-&gt;86|1167-&gt;90|2132-&gt;1028|2148-&gt;1035|2176-&gt;1042|2470-&gt;1309|2486-&gt;1316|2514-&gt;1323|2802-&gt;1584|2818-&gt;1591|2846-&gt;1598|3139-&gt;1864|3155-&gt;1871|3183-&gt;1878|3480-&gt;2148|3496-&gt;2155|3524-&gt;2162|3813-&gt;2424|3829-&gt;2431|3857-&gt;2438|4173-&gt;2727|4186-&gt;2731|4214-&gt;2738|4243-&gt;2739|4981-&gt;3450|5011-&gt;3464|5050-&gt;3465|5084-&gt;3472|5246-&gt;3607|5271-&gt;3610|5403-&gt;3715|5423-&gt;3725|5454-&gt;3734|5603-&gt;3855|5628-&gt;3858|5659-&gt;3861|5684-&gt;3864|5747-&gt;3897|5820-&gt;3942
+                  LINES: 27-&gt;1|32-&gt;1|34-&gt;3|52-&gt;21|52-&gt;21|52-&gt;21|56-&gt;25|56-&gt;25|56-&gt;25|60-&gt;29|60-&gt;29|60-&gt;29|65-&gt;34|65-&gt;34|65-&gt;34|69-&gt;38|69-&gt;38|69-&gt;38|73-&gt;42|73-&gt;42|73-&gt;42|86-&gt;55|86-&gt;55|86-&gt;55|86-&gt;55|100-&gt;69|100-&gt;69|100-&gt;69|101-&gt;70|102-&gt;71|102-&gt;71|103-&gt;72|103-&gt;72|103-&gt;72|104-&gt;73|104-&gt;73|104-&gt;73|104-&gt;73|106-&gt;75|109-&gt;78
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

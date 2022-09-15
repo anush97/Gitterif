@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RepositoryProfile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Models</a> &gt; <span class="el_source">RepositoryProfile.java</span></div><h1>RepositoryProfile.java</h1><pre class="source lang-java linenums">package Models;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+/**
+ * Class to handle all Data and Helper Functions to Get and Process data for Repository Profile Page
+ * @author Elvin Rejimone
+ *
+ */
+public class RepositoryProfile {
+		
+	public String queryString;
+	public String repoID;
+	public String repoName;
+	public String ownerName;
+	public String description;
+	public String size;
+	public String language;
+	public String created;
+	public String stars;
+	public String watch;
+	public String forks;
+	public String issues_URL;
+	public String contributors_URL;
+	public String issuesCount;
+	public String repoLink;
+	
+<span class="fc" id="L33">	public ArrayList&lt;String&gt; issueTitleList = new ArrayList&lt;&gt;(); // @Anushka This ArrayList is for your Issue Statistics Page</span>
+	
+<span class="fc" id="L35">	public ArrayList&lt;RepoIssue&gt; issueList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">	public ArrayList&lt;RepoCollaborator&gt; collabList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">	ArrayList&lt;String&gt; topics = new ArrayList&lt;&gt;() ;</span>
+	JsonNode issuesObj;
+	JsonNode contributorsObj;
+<span class="fc" id="L40">	int count=0;</span>
+
+	
+	/**
+	 * Constructor to create RepositoryProfile Object which will contain all Details of a Repository
+	 * @param obj
+	 * @param query
+	 * @param id
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @author Elvin Rejimone
+	 */
+<span class="fc" id="L52">	public RepositoryProfile(JsonNode obj, String query, String id) throws InterruptedException, ExecutionException {</span>
+<span class="fc" id="L53">		queryString =query;</span>
+<span class="fc" id="L54">		repoID = id;</span>
+		
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for(JsonNode data:obj) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			if(data.get(&quot;id&quot;).toString().equals(repoID)) {</span>
+<span class="fc" id="L58">				repoName= data.get(&quot;name&quot;).toString().substring(1, data.get(&quot;name&quot;).toString().length()-1);</span>
+<span class="fc" id="L59">				ownerName= data.get(&quot;owner&quot;).findPath(&quot;login&quot;).toPrettyString().substring(1,data.get(&quot;owner&quot;).findPath(&quot;login&quot;).toPrettyString().length()-1);</span>
+<span class="fc" id="L60">				description = data.get(&quot;description&quot;).toString().replaceAll(&quot;^\&quot;|\&quot;$&quot;, &quot;&quot;);;</span>
+<span class="fc" id="L61">				size = data.get(&quot;size&quot;).toString();</span>
+<span class="fc" id="L62">				stars = data.get(&quot;stargazers_count&quot;).toString();</span>
+<span class="fc" id="L63">				watch = data.get(&quot;watchers&quot;).toString();</span>
+<span class="fc" id="L64">				language = data.get(&quot;language&quot;).toString().replaceAll(&quot;^\&quot;|\&quot;$&quot;, &quot;&quot;);;</span>
+<span class="fc" id="L65">				issuesCount = data.get(&quot;open_issues&quot;).toString();</span>
+<span class="fc" id="L66">				issues_URL = &quot;https://api.github.com/repos/&quot;+ ownerName + &quot;/&quot;+ repoName + &quot;/issues&quot;;</span>
+<span class="fc" id="L67">				contributors_URL = &quot;https://api.github.com/repos/&quot;+ ownerName + &quot;/&quot;+ repoName + &quot;/contributors&quot;;</span>
+<span class="fc" id="L68">				created = data.get(&quot;created_at&quot;).toString().replaceAll(&quot;^\&quot;|\&quot;$&quot;, &quot;&quot;);</span>
+<span class="fc" id="L69">				topics = new ObjectMapper().convertValue(data.get(&quot;topics&quot;), ArrayList.class);</span>
+<span class="fc" id="L70">				forks = data.get(&quot;forks&quot;).toString().replaceAll(&quot;^\&quot;|\&quot;$&quot;, &quot;&quot;);</span>
+<span class="fc" id="L71">				repoLink = data.get(&quot;html_url&quot;).toString().replaceAll(&quot;^\&quot;|\&quot;$&quot;, &quot;&quot;);</span>
+<span class="fc" id="L72">				System.out.println(topics.toString());			</span>
+<span class="fc" id="L73">				break;</span>
+			}
+			
+<span class="fc" id="L76">		}</span>
+	
+<span class="fc" id="L78">	}</span>
+	
+	
+	
+	/**
+	 * Function to get JsonNode result and extract Issues and Collaborators and call their respective constructors to create Objects
+	 * @param obj
+	 * @param option
+	 * @return boolean To indicate success of results 
+	 * @author Elvin Rejimone
+	 */
+	public boolean getDataFromResult(JsonNode obj, String option) {
+<span class="fc" id="L90">		int count=0;</span>
+		
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if(option.equals(&quot;Issues&quot;)) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			for(JsonNode data:obj) {</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">				if(count==20) {</span>
+<span class="nc" id="L95">					break;</span>
+				}else {
+<span class="fc" id="L97">					RepoIssue issue = new RepoIssue(data.get(&quot;title&quot;).toString(), data.get(&quot;body&quot;).toString(), data.get(&quot;created_at&quot;).toString(), data.get(&quot;state&quot;).toString(), data.get(&quot;number&quot;).toString());</span>
+<span class="fc" id="L98">					issueList.add(issue);</span>
+<span class="fc" id="L99">					issueTitleList.add(data.get(&quot;title&quot;).toString().substring(1, data.get(&quot;title&quot;).toString().length()-1));</span>
+<span class="fc" id="L100">					count++;</span>
+				}				
+<span class="fc" id="L102">			}</span>
+<span class="fc" id="L103">			return true;</span>
+			
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		}else if(option.equals(&quot;Collab&quot;)) {</span>
+			
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			for(JsonNode data:obj) {</span>
+<span class="fc" id="L108">				RepoCollaborator contributor = new RepoCollaborator(data.get(&quot;login&quot;).toString(), data.get(&quot;id&quot;).toString(), data.get(&quot;contributions&quot;).toString(), data.get(&quot;avatar_url&quot;).toString());</span>
+<span class="fc" id="L109">				collabList.add(contributor);</span>
+<span class="fc" id="L110">			}</span>
+<span class="fc" id="L111">			return true;</span>
+		}
+<span class="fc" id="L113">		return false;</span>
+	}
+	
+	 
+	/**
+	 * Function to return Topics
+	 * @return List of Topics
+	 * @author Elvin Rejimone
+	 */
+	public ArrayList&lt;String&gt; getTopicsList(){
+<span class="fc" id="L123">		 return topics;</span>
+	 };
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

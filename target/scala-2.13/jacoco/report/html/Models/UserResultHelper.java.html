@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserResultHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Models</a> &gt; <span class="el_source">UserResultHelper.java</span></div><h1>UserResultHelper.java</h1><pre class="source lang-java linenums">package Models;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+/**
+ * @author ujjawal
+ * Helps to find the user repositories and other details 
+ */
+<span class="fc" id="L16">public class UserResultHelper{</span>
+	
+	  
+<span class="fc" id="L19">    public ArrayList&lt;String&gt; allSearches = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">    LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; allResult = new LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;();</span>
+<span class="fc" id="L21">    public HashMap&lt;String, JsonNode&gt; fullSearchData = new HashMap&lt;String, JsonNode&gt;();</span>
+
+    
+    
+    
+	/**
+	 * filters the data based on query
+	 * @param query for searching the value in input box
+	 * @param obj data from github
+	 * @return returns the value
+	 * @throws InterruptedException 
+	 * @throws ExecutionException
+	 */
+	public LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; getUserResult(String query, JsonNode obj) throws InterruptedException, ExecutionException {
+<span class="fc" id="L35">		List&lt;GithubResult&gt; records = new ArrayList&lt;GithubResult&gt;();</span>
+<span class="fc" id="L36">		System.out.println(&quot;Size of Obj :: &quot;+obj.size());</span>
+		
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		for(JsonNode data:obj) {</span>
+<span class="fc" id="L39">			GithubResult result = new GithubResult(data.get(&quot;name&quot;).toString(),data.get(&quot;owner&quot;).findPath(&quot;avatar_url&quot;).toPrettyString(),data.get(&quot;topics&quot;),query, data.get(&quot;description&quot;).toString());</span>
+<span class="fc" id="L40">			fullSearchData.put(query, obj);</span>
+<span class="fc" id="L41">			records.add(result);			</span>
+<span class="fc" id="L42">		}</span>
+		
+<span class="fc" id="L44">		records = records.stream()</span>
+<span class="fc" id="L45">				.limit(10)</span>
+<span class="fc" id="L46">				.collect(Collectors.toList());</span>
+<span class="fc" id="L47">		addToTotalSearchList(query, (ArrayList&lt;GithubResult&gt;) records);</span>
+		
+<span class="fc" id="L49">		return allResult;</span>
+	}
+	/**
+	 * 
+	 * @param query searches for the query
+	 * @param singleRecord argument
+	 */
+	public void addToTotalSearchList(String query, ArrayList&lt;GithubResult&gt; singleRecord) {
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if(!allSearches.contains(query)) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if(allSearches.size()==10) {</span>
+<span class="nc" id="L59">				String removingQuery = allSearches.get(0);</span>
+<span class="nc" id="L60">				allResult.remove(removingQuery);</span>
+<span class="nc" id="L61">				allSearches.remove(0);</span>
+			}
+<span class="fc" id="L63">			allSearches.add(query);</span>
+<span class="fc" id="L64">			allResult.put(query, singleRecord);</span>
+		}
+<span class="fc" id="L66">	System.out.println(allSearches.toString());</span>
+<span class="fc" id="L67">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

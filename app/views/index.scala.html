@@ -1,0 +1,118 @@
+@(results: LinkedHashMap[String, ArrayList[Models.GithubResult]], keys: List[String], request: play.mvc.Http.Request)
+	<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+	<script type='text/javascript' src='@routes.Assets.versioned("javascripts/index.js")'></script>  
+
+
+<section data-ws-url="@routes.HomeController.ws.webSocketURL(request)" style=" margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px">
+  <div class="header">
+    
+      <div style="border:dotted 0.1px white;text-align:center">
+      		
+      		<h1 style="font-size: 50px;" ><span style=" font-size: 50px; font-family: Georgia;">Gitterific</span> </h1>
+      		<form name="search" id="form" action="/" method="GET">
+	      	<input style="text-align: left;margin: 0 px 10px;padding: 15px; font-size: 20px;" id="user" name="search" type="text" placeholder="enter name">
+	      	<button style="background-color: #42a386;
+          border: none;
+          color: white;
+          padding: 17px 25px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;" type="submit">Search</button>
+	      	</form>
+      </div>
+      
+  </div>
+  
+  
+  @if(!results.isEmpty()) {
+  <h5 style="margin-left: 25px;">Showing @keys.size() Results</h5>
+
+  	
+      @for(key <- keys){
+      <div class="container" style="display: flex;justify-content: center; ">
+      <div style="padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;">
+       <center> <span>Showing Results of <h1 style="display:inline-block;margin-left: 10px;">@key</h1> </span></center>
+        <table style="width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+            <thead style="background-color: #42a386; padding: 10px; height:50px ;">
+              <tr>
+                <th style="border: 1px solid rgb(211, 211, 211);">Owner</th>
+                <th  style="border: 1px solid rgb(211, 211, 211);">Repository</th>
+                <th  style="border: 1px solid rgb(211, 211, 211);">Topics</th>
+
+              </tr>
+            </thead>
+            <tbody style="background-color: #dee2e1; text-align: center;">
+              
+              @for(obj <- results.get(key) ){
+                <tr style="height: 50px ">
+                <td id="Owner@obj.repoID" style="border: 1px solid rgb(104, 207, 164);"><a href="/user/@obj.ownerName">@obj.ownerName</a></td>
+                <td  id="Name@obj.repoID" style="border: 1px solid rgb(104, 207, 164);"><a href="/repo/@obj.queryString/@obj.repoID">@obj.repoName</a></td>
+                <td id="Topics@obj.repoID" style="border: 1px solid rgb(104, 207, 164);">
+                  @for(topic <- obj.returnTopics()){
+                   <div style="display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 4px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;"><a style="color :#dee2e1;" href="/topic/@topic"> @topic</a> </div> 
+                  }
+                </td>
+              </tr>
+              }
+               
+            
+            </tbody> 
+          </table>
+        </div>
+         </div>
+        
+        }
+
+}
+
+</section>
+<script>
+  
+  
+
+  (function() {
+  $(function() {
+    var ws;
+    console.log("Inside Custom Script");
+    ws = new WebSocket($("section").data("ws-url"));
+    return ws.onmessage = function(event) {
+      var message;
+      message = JSON.parse(event.data);
+      if(message.status == "No-Change"){
+        console.log("No Change from last Update!");
+        $('#time').append(message.status + "<br/>");
+      }else{
+        console.log(message.value);   
+        var allChanges = JSON.parse(message.value);
+        console.log("Updating "+ message.status + "Repositories" );
+        for(var i =0; i< parseInt(message.status); i++){                    
+             var githubResult = allChanges[i];
+             console.log(githubResult);
+             $("#Owner"+ githubResult.repoToChange).html("<a href='/user/"+ githubResult.ownerName + "'>"+ githubResult.ownerName+"</a>");
+             $("#Name"+ githubResult.repoToChange).html("<a href='/repo/"+ githubResult.queryString+"/"+ githubResult.repoID +"'>" + githubResult.repoName+ "</a>");
+             var data= '';
+             var topics= githubResult.topics.substring(1, githubResult.topics.length-1).split(",");
+             console.log("Topics :: "+topics+ " : " +topics.length);
+             if(topics.length>1){
+              console.log("Topics :: " +topics[4]);
+               for(var j=0; j<topics.length; j++){
+                  data += "<div style='display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 4px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;'><a style='color :#dee2e1;' href='/topic/" + topics[j] + "'> " + topics[j] + "</a> </div> ";
+               }
+               $("#Topics"+ githubResult.repoToChange).html(data);
+             }
+        }
+      }
+    };
+  });
+
+}).call(this);
+
+
+</script>
+

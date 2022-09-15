@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">HomeController.java</span></div><h1>HomeController.java</h1><pre class="source lang-java linenums">package controllers;
+
+import static akka.pattern.Patterns.ask;
+import scala.concurrent.Await;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import akka.actor.ActorNotFound;
+import akka.actor.ActorRef;
+import akka.actor.Nobody;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import play.mvc.WebSocket;
+import java.util.HashMap;//
+import javax.inject.Inject;
+import actors.UserActor;
+import actors.TopicActor;
+import scala.concurrent.duration.Duration;
+import com.fasterxml.jackson.databind.JsonNode;
+
+import Models.CommitsResult;
+import Models.GithubResult;
+import Models.RepositoryProfile;
+import Models.SearchResultHelper;
+import Models.StatisticsInfo;
+import Models.StatsModel;
+import Models.TopicResultHelper;
+import Models.UserResultHelper;
+import Utils.Cache;
+import actors.CommitsActor;
+import actors.CommitsActor.CommitInfo;
+import actors.RepoProfileActor;
+import actors.RepoProfileActor.RepoProfileInfo;
+import actors.SearchResultActor;
+import actors.SearchResultActor.SearchResultInfo;
+import actors.SearchSupervisor;
+import actors.StatisticsActor;//actor
+import actors.StatisticsActor.StatsInfo;//
+import actors.TopicActor;
+import actors.TopicActor.TopicInfo;
+
+//import actors.TimeActor;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.stream.Materializer;
+import play.libs.Json;
+import play.libs.ws.WSBodyReadables;
+import play.libs.ws.WSBodyWritables;
+import play.libs.ws.WSClient;
+import play.libs.ws.WSRequest;
+import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Result;
+import play.libs.streams.ActorFlow;
+import scala.compat.java8.FutureConverters;
+import services.CommitService;
+import services.RepoProfileService;
+import services.StatsService;// service
+
+
+/**
+ * This controller contains an action to handle HTTP requests to the
+ * application's home page.
+ *
+ * @author Elvin Rejimone, Santhosh Santhanam, Anushka Sharma, Ujjawal Aggarwal,
+ *         Sejal Chopra
+ * @version 1.0.0
+ */
+
+/**
+ * @author ujjawal
+ *
+ */
+/**
+ * @author ujjawal
+ *
+ */
+public class HomeController extends Controller implements WSBodyReadables, WSBodyWritables {
+	/**
+	 * Defining the public parameters
+	 */
+	private final AssetsFinder assetsFinder;
+	private Cache cache;
+
+<span class="pc" id="L92">	@Inject</span>
+	WSClient ws = null;
+	Map.Entry&lt;String, Integer&gt; e;
+	JsonNode fullCommitsResult;
+<span class="pc" id="L96">	List&lt;JsonNode&gt; response = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L97">	LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; allResultList = new LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;();</span>
+<span class="pc" id="L98">	List&lt;String&gt; keysList = new ArrayList&lt;&gt;();</span>
+	CommitsResult cr;
+<span class="pc" id="L100">	public ArrayList&lt;String&gt; issueTitleList_controller = new ArrayList&lt;&gt;();</span>
+	public ArrayList&lt;String&gt; issue_controller;
+<span class="pc" id="L102">	LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; topicResultList = new LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;();</span>
+<span class="pc" id="L103">	List&lt;String&gt; topicList = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L104">	TopicResultHelper topicHelper = new TopicResultHelper();</span>
+<span class="pc" id="L105">	List&lt;String&gt; userList = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L106">	UserResultHelper userHelper = new UserResultHelper();</span>
+	ArrayList&lt;String&gt; al2;
+<span class="pc" id="L108">	public Map&lt;String, Integer&gt; result = new LinkedHashMap&lt;&gt;();</span>
+	HashMap&lt;String,Object&gt; data  ;//
+
+	//Services 
+	
+<span class="pc" id="L113">	@Inject </span>
+	SearchResultHelper srHelper = new SearchResultHelper(ws);
+<span class="pc" id="L115">	@Inject</span>
+	RepoProfileService repoService = new RepoProfileService(ws);
+<span class="pc" id="L117">	@Inject</span>
+	CommitService commitService = new CommitService(ws);
+<span class="pc" id="L119">	@Inject//</span>
+	StatsService statsService= new StatsService();
+
+	@Inject
+	private ActorSystem actorSystem;
+	@Inject
+	private Materializer materializer;
+
+	ActorRef repoProfileActor;
+	ActorRef commitsActor;
+	ActorRef searchActor;
+	ActorRef statsActor;//
+	ActorRef topicActor;//
+
+	
+<span class="pc" id="L134">	boolean IS_TOPIC_ACTOR_STARTED = false;</span>
+
+<span class="nc" id="L136">	public HomeController() {</span>
+<span class="nc" id="L137">		this.assetsFinder = null;</span>
+<span class="nc" id="L138">	}</span>
+
+	@Inject
+<span class="fc" id="L141">	public HomeController(AssetsFinder assetsFinder, Cache cache, ActorSystem system) {</span>
+<span class="fc" id="L142">		this.assetsFinder = assetsFinder;</span>
+<span class="fc" id="L143">		this.cache = cache;</span>
+		//actorSystem.actorOf(TimeActor.props(), &quot;timeActor&quot;);
+<span class="fc" id="L145">		repoProfileActor = system.actorOf(RepoProfileActor.getProps());</span>
+<span class="fc" id="L146">		commitsActor = system.actorOf(CommitsActor.getProps(commitService));</span>
+<span class="fc" id="L147">		searchActor = system.actorOf(SearchResultActor.getProps(), &quot;searchActor&quot;);</span>
+<span class="fc" id="L148">		statsActor = system.actorOf(StatisticsActor.getProps());//</span>
+		//system.actorOf(TopicActor.getProps(),&quot;topicActor&quot;);
+		
+
+<span class="fc" id="L152">	}</span>
+	
+	 /**
+	 * @Websocket pushes info from server to client
+	 */
+	public WebSocket ws(){
+<span class="nc" id="L158">		 System.out.println(&quot;Inside Websocket!! &quot;);</span>
+<span class="nc" id="L159">	        return WebSocket.Json.accept(request -&gt; ActorFlow.actorRef(SearchSupervisor::props, actorSystem, materializer));</span>
+	    }
+	 
+	  public WebSocket wsTopic(){
+		  
+<span class="nc" id="L164">	        return WebSocket.Json.accept(request-&gt;ActorFlow.actorRef(UserActor::props,actorSystem,materializer));</span>
+	    }
+
+	/**
+	 * enter new search terms which will result in 10 more results being displayed
+	 * 
+	 * @author Santhosh Santhanam
+	 * @author Elvin Rejimone
+	 * @author Anushka Sharma
+	 * @author Ujjawal Agarwal
+	 * @author Sejal Chopra
+	 * @param request Http request parameter
+	 * @return search.scala.html
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompletionStage&lt;Result&gt; index(Http.Request request) throws InterruptedException, ExecutionException {
+<span class="fc" id="L181">		System.out.println(request.queryString(&quot;search&quot;));</span>
+
+//		if (!request.queryString(&quot;search&quot;).isPresent()) {
+//			return CompletableFuture.supplyAsync(ok(views.html.index.render(allResultList, keysList)));
+//		} else {
+			
+<span class="fc" id="L187">			String QueryString = &quot;none&quot;;; </span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">			if(request.queryString(&quot;search&quot;).isPresent()) {</span>
+<span class="fc" id="L189">				QueryString = request.queryString(&quot;search&quot;).get();</span>
+			}
+			
+<span class="fc" id="L192">			return FutureConverters</span>
+<span class="fc" id="L193">					.toJava(ask(searchActor, new SearchResultInfo(QueryString, cache, srHelper), 10000))</span>
+<span class="fc" id="L194">					.thenApply(response -&gt; {</span>
+<span class="fc" id="L195">						allResultList = (LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;)response;</span>
+
+<span class="fc bfc" id="L197" title="All 2 branches covered.">						if(allResultList.size() == 0) {</span>
+<span class="fc" id="L198">						   return ok(views.html.index.render(allResultList, keysList, request));</span>
+						}else {
+<span class="fc" id="L200">						keysList.clear();</span>
+<span class="fc" id="L201">						keysList.addAll((allResultList.keySet()));</span>
+<span class="fc" id="L202">						Collections.reverse(keysList);</span>
+<span class="fc" id="L203">						return ok(views.html.index.render(allResultList, keysList, request));</span>
+						}
+					});
+			
+//			allResultList = srHelper.searchGithub(request.queryString(&quot;search&quot;).get(), cache);
+//			keysList.clear();
+//			keysList.addAll((allResultList.keySet()));
+//			Collections.reverse(keysList);
+//			return ok(views.html.index.render(allResultList, keysList));
+//		}
+
+	}
+
+	/**
+	 * Search- hit the api and search the for the word
+	 * 
+	 * @author Santhosh Santhanam
+	 * @author Elvin Rejimone
+	 * @author Sejal Chopra
+	 * @param query - search string
+	 * @param type  To identify the API call
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; searchGithub(String query, int type)
+			throws InterruptedException, ExecutionException {
+<span class="fc" id="L230">		WSRequest req = null;</span>
+<span class="fc" id="L231">		LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; finalList = null;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (type == 1) {</span>
+<span class="nc" id="L233">			String querytoCheckCache = &quot;https://api.github.com/search/repositories?q=&quot; + query;</span>
+<span class="nc" id="L234">			JsonNode obj = cache.get(querytoCheckCache);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">			if (obj != null) {</span>
+<span class="nc" id="L236">				System.out.println(&quot;Taking from Cache&quot;);</span>
+			} else {
+<span class="nc" id="L238">				System.out.println(&quot;Not Found in Cache, requesting and Storing in Cache&quot;);</span>
+<span class="nc" id="L239">				System.out.println(&quot;Query : https://api.github.com/search/repositories?q=&quot; + query);</span>
+<span class="nc" id="L240">				System.out.println();</span>
+<span class="nc" id="L241">				req = ws.url(&quot;https://api.github.com/search/repositories?q=&quot; + query);</span>
+<span class="nc" id="L242">				CompletionStage&lt;JsonNode&gt; res = req.get().thenApply(r -&gt; r.asJson());</span>
+<span class="nc" id="L243">				obj = Json.toJson(res.toCompletableFuture().get().findPath(&quot;items&quot;));</span>
+<span class="nc" id="L244">				cache.put(querytoCheckCache, obj);</span>
+			}
+
+<span class="nc" id="L247">			finalList = srHelper.getArrayofGithubResult(query, obj);</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		} else if (type == 2) {</span>
+<span class="nc" id="L249">			req = ws.url(String.format(&quot;https://api.github.com/search/repositories?q=topic:%s&amp;per_page=10&amp;sort=updated&quot;,</span>
+					query));
+<span class="nc" id="L251">			CompletionStage&lt;JsonNode&gt; res = req.get().thenApply(r -&gt; r.asJson());</span>
+<span class="nc" id="L252">			JsonNode obj = Json.toJson(res.toCompletableFuture().get().findPath(&quot;items&quot;));</span>
+<span class="nc" id="L253">			finalList = topicHelper.getArrayofGithubResult(query, obj);</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		} else if (type == 3) {</span>
+<span class="fc" id="L255">			req = ws.url(String.format(&quot;https://api.github.com/users/%s/repos&quot;, query));</span>
+<span class="fc" id="L256">			CompletionStage&lt;JsonNode&gt; res = req.get().thenApply(r -&gt; r.asJson());</span>
+<span class="fc" id="L257">			JsonNode obj = res.toCompletableFuture().get();</span>
+<span class="fc" id="L258">			finalList = userHelper.getUserResult(query, obj);</span>
+		}
+<span class="fc" id="L260">		return finalList;</span>
+	}
+
+	/**
+	 * display the 10 latest repositories containing this topic, in the same format
+	 * as the results on the main search page.
+	 * 
+	 * @author Sejal Chopra
+	 * @param request Http request parameter
+	 * @return views.html.topic
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompletionStage&lt;Result&gt; topics(String requests,Http.Request request) throws InterruptedException, ExecutionException,TimeoutException {
+		
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if(!IS_TOPIC_ACTOR_STARTED) {</span>
+<span class="fc" id="L276">			topicActor = actorSystem.actorOf(TopicActor.getProps(requests),&quot;topicActor&quot;);</span>
+<span class="fc" id="L277">			IS_TOPIC_ACTOR_STARTED = true;</span>
+		}
+		
+<span class="fc" id="L280">		return FutureConverters</span>
+<span class="fc" id="L281">				.toJava(ask(topicActor, new TopicInfo(requests), 10000))</span>
+<span class="fc" id="L282">				.thenApply(response -&gt; {</span>
+<span class="fc" id="L283">					topicResultList = (LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;) response;</span>
+<span class="fc" id="L284">					topicList.clear();</span>
+<span class="fc" id="L285">					topicList.addAll(topicResultList.keySet());</span>
+<span class="fc" id="L286">					Collections.reverse(topicList);</span>
+					
+<span class="fc" id="L288">					return ok(views.html.topic.render(topicResultList, topicList, request));</span>
+				});	    
+	}
+
+	/**
+	 * Display all available public profile information about a user and the other
+	 * repositories of that user
+	 * 
+	 * @author Ujjawal
+	 * @param request
+	 * @return Users details
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	
+	// public CompletionStage&lt;Result&gt; users(String requests,Http.Request request) throws InterruptedException, ExecutionException,TimeoutException {
+		
+	// 	if(!IS_TOPIC_ACTOR_STARTED) {
+	// 		topicActor = actorSystem.actorOf(UsersActor.getProps(requests),&quot;userActor&quot;);
+	// 		IS_TOPIC_ACTOR_STARTED = true;
+	// 	}
+		
+	// 	return FutureConverters
+	// 			.toJava(ask(topicActor, new TopicInfo(requests), 10000))
+	// 			.thenApply(response -&gt; {
+	// 				topicResultList = (LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;) response;
+	// 				topicList.clear();
+	// 				topicList.addAll(topicResultList.keySet());
+	// 				Collections.reverse(topicList);
+					
+	// 				return ok(views.html.users.render(topicResultList, topicList, request));
+	// 			});	    
+	// }
+
+	public Result users(String request) throws InterruptedException, ExecutionException {
+
+<span class="fc" id="L324">		topicResultList = searchGithub(request, 3);</span>
+<span class="fc" id="L325">		topicList.clear();</span>
+<span class="fc" id="L326">		topicList.addAll(topicResultList.keySet());</span>
+<span class="fc" id="L327">		Collections.reverse(topicList);</span>
+<span class="fc" id="L328">		return ok(views.html.user.render(topicResultList, topicList));</span>
+		
+	}
+
+	/**
+	 * Repository Profile: all available details for a repository Display 20 latest
+	 * issues of that repository with their information
+	 * 
+	 * @author Elvin Rejimone
+	 * @param queryString
+	 * @param IDString
+	 * @return Return result object
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public CompletionStage&lt;Result&gt; repoProfileRequestHandler(String queryString, String IDString)
+			throws InterruptedException, ExecutionException {
+<span class="nc" id="L345">		return FutureConverters</span>
+<span class="nc" id="L346">				.toJava(ask(repoProfileActor, new RepoProfileInfo(queryString, IDString, cache, repoService), 10000))</span>
+<span class="nc" id="L347">				.thenApply(response -&gt; {</span>
+<span class="nc" id="L348">					RepositoryProfile repoProfile = (RepositoryProfile) response;</span>
+<span class="nc" id="L349">					issueTitleList_controller = repoProfile.issueTitleList;</span>
+<span class="nc" id="L350">					return ok(views.html.repodetails.render(repoProfile));</span>
+				});
+	}
+
+	/**
+	 * Initialised issue page with words statistics and further stats
+	 * 
+	 * @author Anushka Sharma
+	 * @param request
+	 * @return word statistics of issues titles
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	// Issues
+	public CompletionStage&lt;Result&gt; issues() throws InterruptedException, ExecutionException {//
+<span class="fc" id="L365">		issue_controller = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">		 if (issueTitleList_controller.isEmpty()){</span>
+<span class="fc" id="L367">			return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L368">		 		return ok(views.html.no_issues.render());</span>
+		});}
+		 else{
+<span class="nc" id="L371">return FutureConverters</span>
+<span class="nc" id="L372">		.toJava(ask(statsActor, new StatsInfo(issueTitleList_controller), 10000))</span>
+<span class="nc" id="L373">		.thenApply(response -&gt; {</span>
+			//StatsModel stats = (StatsModel) response;
+<span class="nc" id="L375">			 data = (HashMap&lt;String,Object&gt;) response;</span>
+<span class="nc" id="L376">			StatsModel s= (StatsModel)data.get(&quot;list&quot;);</span>
+<span class="nc" id="L377">			ArrayList&lt;Integer&gt;Isseus_details = (ArrayList&lt;Integer&gt;)data.get(&quot;count&quot;);</span>
+
+			// for (Map.Entry&lt;String, Integer&gt; entry1 : s.wordfrequency.entrySet()) {
+			//  	System.out.println(entry1.getKey() + &quot; =&gt; &quot; + entry1.getValue());
+			// }
+
+<span class="nc" id="L383">			Iterator iterator = s.wordfrequency.keySet().iterator();</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">			while (iterator.hasNext()) {</span>
+<span class="nc" id="L385">				Object key = iterator.next();</span>
+<span class="nc" id="L386">				issue_controller.add((String) key);</span>
+<span class="nc" id="L387">			}</span>
+			//StatisticsInfo obj = new StatisticsInfo();
+			//ArrayList&lt;Integer&gt; Isseus_details = obj.Calculate_Stats();
+<span class="nc" id="L390">			return ok(views.html.issuesstats.render(Isseus_details, issue_controller, s.wordfrequency));</span>
+			
+
+		});}
+}
+	/**
+	 * Commits function to calculate the statistics for a repositories commits
+	 * 
+	 * @author Santhosh Santhanam
+	 * @param user Owner name of the repository owner
+	 * @param repo Repository name
+	 * @return Completion stage of result containing commits statistics
+	 * @throws Exception
+	 */
+	public CompletionStage&lt;Result&gt; commits(String user, String repo) throws Exception {
+<span class="fc" id="L405">		List&lt;String&gt; commitKeysList = new ArrayList&lt;&gt;();</span>
+		/*
+		 * CompletableFuture&lt;List&lt;CommitsResult&gt;&gt; topCommiters =
+		 * commitService.getCommitsData(user, repo); List&lt;CommitsResult&gt; topTen =
+		 * topCommiters.toCompletableFuture().get().parallelStream() .map(c -&gt; new
+		 * CommitsResult(c.get_user_name(), c.get_additions(), c.get_deletions()))
+		 * .collect(Collectors.toList()); result =
+		 * topTen.parallelStream().collect(Collectors.toMap(w -&gt; w.get_user_name(), w -&gt;
+		 * 1, Integer::sum)); result =
+		 * result.entrySet().stream().sorted((Map.Entry.&lt;String,
+		 * Integer&gt;comparingByValue().reversed())).limit(10)
+		 * .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -&gt;
+		 * e1, LinkedHashMap::new)); Iterator&lt;String&gt; iterator =
+		 * result.keySet().iterator(); while (iterator.hasNext()) { Object commitKey =
+		 * iterator.next(); commitKeysList.add((String) commitKey); } int size =
+		 * topCommiters.toCompletableFuture().get().size();
+		 * System.out.println(&quot;LAST VALUE: &quot; +
+		 * topCommiters.toCompletableFuture().get().get(size - 1)); return
+		 * ok(views.html.commits.render(topCommiters.toCompletableFuture().get().get(
+		 * size - 1), commitKeysList, result));
+		 */
+<span class="fc" id="L426">		return FutureConverters.toJava(ask(commitsActor, new CommitInfo(user, repo, commitService), 1000000))</span>
+<span class="fc" id="L427">				.thenApplyAsync(response -&gt; {</span>
+<span class="fc" id="L428">					List&lt;CommitsResult&gt; topCommiters = (List&lt;CommitsResult&gt;) response;</span>
+<span class="fc" id="L429">					List&lt;CommitsResult&gt; topTen = topCommiters.parallelStream()</span>
+<span class="fc" id="L430">							.map(c -&gt; new CommitsResult(c.get_user_name(), c.get_additions(), c.get_deletions()))</span>
+<span class="fc" id="L431">							.collect(Collectors.toList());</span>
+<span class="fc" id="L432">					result = topTen.parallelStream()</span>
+<span class="fc" id="L433">							.collect(Collectors.toMap(w -&gt; w.get_user_name(), w -&gt; 1, Integer::sum));</span>
+<span class="fc" id="L434">					result = result.entrySet().stream()</span>
+<span class="fc" id="L435">							.sorted((Map.Entry.&lt;String, Integer&gt;comparingByValue().reversed())).limit(10)</span>
+<span class="pc" id="L436">							.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -&gt; e1,</span>
+									LinkedHashMap::new));
+<span class="fc" id="L438">					Iterator&lt;String&gt; iterator = result.keySet().iterator();</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">					while (iterator.hasNext()) {</span>
+<span class="fc" id="L440">						Object commitKey = iterator.next();</span>
+<span class="fc" id="L441">						commitKeysList.add((String) commitKey);</span>
+<span class="fc" id="L442">					}</span>
+<span class="fc" id="L443">					int size = topCommiters.size();</span>
+<span class="fc" id="L444">					return ok(views.html.commits.render(topCommiters.get(size - 1), commitKeysList, result));</span>
+				});
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

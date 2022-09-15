@@ -1,0 +1,50 @@
+@(results: HashMap[String, ArrayList[Models.GithubResult]], keys: List[String],request: play.mvc.Http.Request)
+<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+<script type='text/javascript' src='@routes.Assets.versioned("javascripts/index.js")'></script>  
+
+<section data-ws-url="@routes.HomeController.wsTopic.webSocketURL(request)" style=" margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px">
+ 
+  @if(!results.isEmpty()) {    	
+      @for(key <- keys){
+      <div class="container" style="display: flex;justify-content: center; ">
+      <div style="padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;">
+       <center> <span>Showing results for the topic: <h1 style="display:inline-block;margin-left: 10px;">@key</h1> </span></center>
+        <table style="width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+            <thead style="background-color: #42a386; padding: 10px; height:50px ;">
+              <tr>
+                <th style="border: 1px solid rgb(211, 211, 211);">Owner</th>
+                <th  style="border: 1px solid rgb(211, 211, 211);">Repository</th>
+                <th  style="border: 1px solid rgb(211, 211, 211);">Topics</th>
+
+              </tr>
+            </thead>
+            <tbody style="background-color: #dee2e1; text-align: center;">
+              
+              @for(obj <- results.get(key) ){
+                <tr style="height: 50px ">
+                <td style="border: 1px solid rgb(104, 207, 164);">@obj.ownerName</td>
+                <td style="border: 1px solid rgb(104, 207, 164);">@obj.repoName</td>
+                <td style="border: 1px solid rgb(104, 207, 164);">
+                  @for(topic <- obj.returnTopics()){
+                   <div style="display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 3px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;"> @topic </div> 
+                  }
+                </td>
+              </tr>
+              }
+               
+            
+            </tbody> 
+          </table>
+        </div>
+         </div>
+        
+        }
+
+} else {
+  <h1>Not Displaying</h1>
+}
+ 
+</section>

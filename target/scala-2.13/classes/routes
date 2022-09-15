@@ -1,0 +1,20 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index(request:Request)
+GET     /ws                         controllers.HomeController.ws
+GET     /wsTopic                    controllers.HomeController.wsTopic
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+# All Page Routes
+GET     /user/:username                     controllers.HomeController.users(username:String)
+GET     /topic/:topicname                     controllers.HomeController.topics(topicname:String,request:Request)
+GET     /repo/:query/:id     		controllers.HomeController.repoProfileRequestHandler(query:String, id:String)
+GET		/statistics/			controllers.HomeController.issues()
+GET 	/repos/:ownerName/:repoName/commits 	controllers.HomeController.commits(ownerName: String, repoName: String)

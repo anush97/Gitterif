@@ -1,0 +1,124 @@
+@(details:ArrayList[Integer],keys:ArrayList[String],stats:Map[String,Integer])
+
+<section style=" margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px">
+  <div class="header" style="padding: 30px;
+	  text-align: center;
+	  background: #1abc9c;
+	  color: white;
+	  font-size: 30px;">
+    
+  		<h3> <b><u>Word Level Statistics 📝</u> </b></h3>
+
+		  <div class="container" style="display: flex;justify-content: center; ">
+			<div style="padding: 5px;margin: 20px;background-color: #dee2e1;;border-radius: 5px;">
+			  <table style="
+				border-collapse: collapse;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+				
+				  <tbody style="background-color: #dee2e1; text-align: center;">
+					
+				
+					<tr style="height: 50px ">
+					  <td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Total Words: </td>
+					  <td style="background-color: #dee2e1;width: 200px;"><b>@details.get(0) </b></td>
+
+					  <td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Total Words Repeated: </td>
+					  <td style="background-color: #dee2e1;width: 200px;">@details.get(1)</td>
+
+					  <td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Total Character: 📑 </td>
+					  <td style="background-color: #dee2e1;width: 200px;"><b style="">@details.get(2)</b></td>
+					
+					</tr>
+
+					<tr style="height: 50px ">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Unique words: </td>
+						<td style="background-color: #dee2e1;width: 200px;">@details.get(3)</td>
+  
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Maximum Word's Frequency :</td>
+						<td style="background-color: #dee2e1; width: 200px;">@details.get(4)</td>
+
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Minimum Word's Frequency :   </td>
+						<td style="background-color: #dee2e1; width: 200px;">@details.get(5)</td>
+					  </tr> 
+
+					 
+				  </tbody> 
+				</table>
+	
+
+			</div>
+
+		</div>
+     <div class="container" style="display: flex;justify-content: center; ">
+      <div style="padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;">
+        <table style="width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+            <thead style="background-color: #42a386; padding: 10px; height:50px ;">
+			<tr>
+				<th style="border: 1px solid rgb(211, 211, 211);">Word</th>
+				<th  style="border: 1px solid rgb(211, 211, 211);">Count</th>	
+				</tr>
+			</thead>	
+			  <tbody style="background-color: #dee2e1; text-align: center;">
+				@for(key<-keys){
+					<tr style="height: 50px ">									
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;">@key</td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;">@stats.get(key)</td>						
+					</tr>				
+				}			  
+			  </tbody> 
+			</table>
+			</div>
+		</div>
+	  <button style="display: none;
+	  position: fixed;
+	  bottom: 20px;
+	  right: 30px;
+	  z-index: 99;
+	  font-size: 15px;
+	  border: none;
+	  outline: none;
+	  background-color: rgb(15, 43, 80);
+	  color: rgb(247, 247, 247);
+	  cursor: pointer;
+	  padding: 10px;" onclick="topFunction()" id="myBtn" title="Go to top"> ⬆ Back to Display</button>
+
+	<button style="display: block;
+	position: fixed;
+	top: 20px;
+	left: 30px;
+	z-index: 99;
+	font-size: 15px;
+	border: none;
+	outline: none;
+	background-color: rgb(218, 218, 218);
+	color: rgb(7, 75, 18) ;
+	cursor: pointer;
+	padding: 5px;" onclick="window.location.href='/'" title="Go Back"> ⬅ Back to Home pg </button>
+
+  
+</section>
+<script>
+	//Get the button
+	var mybutton = document.getElementById("myBtn");
+	
+	// When the user scrolls down 20px from the top of the document, show the button
+	window.onscroll = function() {scrollFunction()};
+	
+	function scrollFunction() {
+	  if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+		mybutton.style.display = "block";
+	  } else {
+		mybutton.style.display = "none";
+	  }
+	}
+	
+	// When the user clicks on the button, scroll to the top of the document
+	function topFunction() {
+	  document.body.scrollTop = 0;
+	  document.documentElement.scrollTop = 0;
+	}
+	</script>

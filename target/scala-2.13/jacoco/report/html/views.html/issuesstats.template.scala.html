@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>issuesstats.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">issuesstats.template.scala</span></div><h1>issuesstats.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="nc" id="L24">object issuesstats extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template3[ArrayList[Integer],ArrayList[String],Map[String, Integer],play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*1.2*/(details:ArrayList[Integer],keys:ArrayList[String],stats:Map[String,Integer]):play.twirl.api.HtmlFormat.Appendable = {
+<span class="nc" id="L28">    _display_ {</span>
+      {
+
+
+<span class="nc" id="L32">Seq[Any](format.raw/*1.79*/(&quot;&quot;&quot;</span>
+
+<span class="nc" id="L34">&quot;&quot;&quot;),format.raw/*3.1*/(&quot;&quot;&quot;&lt;section style=&quot; margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px&quot;&gt;</span>
+  &lt;div class=&quot;header&quot; style=&quot;padding: 30px;
+	  text-align: center;
+	  background: #1abc9c;
+	  color: white;
+	  font-size: 30px;&quot;&gt;
+    
+  		&lt;h3&gt; &lt;b&gt;&lt;u&gt;Word Level Statistics 📝&lt;/u&gt; &lt;/b&gt;&lt;/h3&gt;
+
+		  &lt;div class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+			&lt;div style=&quot;padding: 5px;margin: 20px;background-color: #dee2e1;;border-radius: 5px;&quot;&gt;
+			  &lt;table style=&quot;
+				border-collapse: collapse;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+				
+				  &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+					
+				
+					&lt;tr style=&quot;height: 50px &quot;&gt;
+					  &lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Total Words: &lt;/td&gt;
+<span class="nc" id="L54">					  &lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&lt;b&gt;&quot;&quot;&quot;),_display_(/*23.64*/details/*23.71*/.get(0)),format.raw/*23.78*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*23.79*/(&quot;&quot;&quot;&lt;/b&gt;&lt;/td&gt;</span>
+
+					  &lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Total Words Repeated: &lt;/td&gt;
+<span class="nc" id="L57">					  &lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*26.61*/details/*26.68*/.get(1)),format.raw/*26.75*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+
+					  &lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Total Character: 📑 &lt;/td&gt;
+<span class="nc" id="L60">					  &lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&quot;&quot;&quot;),_display_(/*29.73*/details/*29.80*/.get(2)),format.raw/*29.87*/(&quot;&quot;&quot;&lt;/b&gt;&lt;/td&gt;</span>
+					
+					&lt;/tr&gt;
+
+					&lt;tr style=&quot;height: 50px &quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Unique words: &lt;/td&gt;
+<span class="nc" id="L66">						&lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*35.60*/details/*35.67*/.get(3)),format.raw/*35.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+  
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Maximum Word's Frequency :&lt;/td&gt;
+<span class="nc" id="L69">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*38.61*/details/*38.68*/.get(4)),format.raw/*38.75*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Minimum Word's Frequency :   &lt;/td&gt;
+<span class="nc" id="L72">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*41.61*/details/*41.68*/.get(5)),format.raw/*41.75*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+					  &lt;/tr&gt; 
+
+					 
+				  &lt;/tbody&gt; 
+				&lt;/table&gt;
+	
+
+			&lt;/div&gt;
+
+		&lt;/div&gt;
+     &lt;div class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+      &lt;div style=&quot;padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;&quot;&gt;
+        &lt;table style=&quot;width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+            &lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+			&lt;tr&gt;
+				&lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Word&lt;/th&gt;
+				&lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Count&lt;/th&gt;	
+				&lt;/tr&gt;
+			&lt;/thead&gt;	
+			  &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+<span class="nc" id="L96">				&quot;&quot;&quot;),_display_(/*65.6*/for(key&lt;-keys) yield /*65.20*/{_display_(Seq[Any](format.raw/*65.21*/(&quot;&quot;&quot;</span>
+					&quot;&quot;&quot;),format.raw/*66.6*/(&quot;&quot;&quot;&lt;tr style=&quot;height: 50px &quot;&gt;									
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&quot;&quot;&quot;),_display_(/*67.99*/key),format.raw/*67.102*/(&quot;&quot;&quot;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&quot;&quot;&quot;),_display_(/*69.99*/stats/*69.104*/.get(key)),format.raw/*69.113*/(&quot;&quot;&quot;&lt;/td&gt;						
+					&lt;/tr&gt;				
+<span class="nc" id="L102">				&quot;&quot;&quot;)))}),format.raw/*71.6*/(&quot;&quot;&quot;			  </span>
+<span class="nc" id="L103">			  &quot;&quot;&quot;),format.raw/*72.6*/(&quot;&quot;&quot;&lt;/tbody&gt; </span>
+			&lt;/table&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	  &lt;button style=&quot;display: none;
+	  position: fixed;
+	  bottom: 20px;
+	  right: 30px;
+	  z-index: 99;
+	  font-size: 15px;
+	  border: none;
+	  outline: none;
+	  background-color: rgb(15, 43, 80);
+	  color: rgb(247, 247, 247);
+	  cursor: pointer;
+	  padding: 10px;&quot; onclick=&quot;topFunction()&quot; id=&quot;myBtn&quot; title=&quot;Go to top&quot;&gt; ⬆ Back to Display&lt;/button&gt;
+
+	&lt;button style=&quot;display: block;
+	position: fixed;
+	top: 20px;
+	left: 30px;
+	z-index: 99;
+	font-size: 15px;
+	border: none;
+	outline: none;
+	background-color: rgb(218, 218, 218);
+	color: rgb(7, 75, 18) ;
+	cursor: pointer;
+	padding: 5px;&quot; onclick=&quot;window.location.href='/'&quot; title=&quot;Go Back&quot;&gt; ⬅ Back to Home pg &lt;/button&gt;
+
+  
+&lt;/section&gt;
+&lt;script&gt;
+	//Get the button
+	var mybutton = document.getElementById(&quot;myBtn&quot;);
+	
+	// When the user scrolls down 20px from the top of the document, show the button
+<span class="nc" id="L140">	window.onscroll = function() &quot;&quot;&quot;),format.raw/*109.31*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*109.32*/(&quot;&quot;&quot;scrollFunction()&quot;&quot;&quot;),format.raw/*109.48*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*109.49*/(&quot;&quot;&quot;;</span>
+	
+<span class="nc" id="L142">	function scrollFunction() &quot;&quot;&quot;),format.raw/*111.28*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*111.29*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L143">	  &quot;&quot;&quot;),format.raw/*112.4*/(&quot;&quot;&quot;if (document.body.scrollTop &gt; 150 || document.documentElement.scrollTop &gt; 150) &quot;&quot;&quot;),format.raw/*112.83*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*112.84*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L144">		&quot;&quot;&quot;),format.raw/*113.3*/(&quot;&quot;&quot;mybutton.style.display = &quot;block&quot;;</span>
+<span class="nc" id="L145">	  &quot;&quot;&quot;),format.raw/*114.4*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*114.5*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*114.6*/(&quot;&quot;&quot;else &quot;&quot;&quot;),format.raw/*114.11*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*114.12*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L146">		&quot;&quot;&quot;),format.raw/*115.3*/(&quot;&quot;&quot;mybutton.style.display = &quot;none&quot;;</span>
+<span class="nc" id="L147">	  &quot;&quot;&quot;),format.raw/*116.4*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*116.5*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L148">	&quot;&quot;&quot;),format.raw/*117.2*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*117.3*/(&quot;&quot;&quot;</span>
+	
+<span class="nc" id="L150">	&quot;&quot;&quot;),format.raw/*119.2*/(&quot;&quot;&quot;// When the user clicks on the button, scroll to the top of the document</span>
+<span class="nc" id="L151">	function topFunction() &quot;&quot;&quot;),format.raw/*120.25*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*120.26*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L152">	  &quot;&quot;&quot;),format.raw/*121.4*/(&quot;&quot;&quot;document.body.scrollTop = 0;</span>
+	  document.documentElement.scrollTop = 0;
+<span class="nc" id="L154">	&quot;&quot;&quot;),format.raw/*123.2*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*123.3*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L155">	&quot;&quot;&quot;),format.raw/*124.2*/(&quot;&quot;&quot;&lt;/script&gt;&quot;&quot;&quot;))</span>
+      }
+    }
+  }
+
+<span class="nc" id="L160">  def render(details:ArrayList[Integer],keys:ArrayList[String],stats:Map[String, Integer]): play.twirl.api.HtmlFormat.Appendable = apply(details,keys,stats)</span>
+
+<span class="nc" id="L162">  def f:((ArrayList[Integer],ArrayList[String],Map[String, Integer]) =&gt; play.twirl.api.HtmlFormat.Appendable) = (details,keys,stats) =&gt; apply(details,keys,stats)</span>
+
+<span class="nc" id="L164">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  SOURCE: app/views/issuesstats.scala.html
+                  HASH: e729ebdccc2c4c01252a243e4fabe63c8c0240c3
+                  MATRIX: 964-&gt;1|1136-&gt;78|1166-&gt;82|2091-&gt;980|2107-&gt;987|2135-&gt;994|2164-&gt;995|2376-&gt;1180|2392-&gt;1187|2420-&gt;1194|2638-&gt;1385|2654-&gt;1392|2682-&gt;1399|2936-&gt;1626|2952-&gt;1633|2980-&gt;1640|3193-&gt;1826|3209-&gt;1833|3237-&gt;1840|3451-&gt;2027|3467-&gt;2034|3495-&gt;2041|4295-&gt;2815|4325-&gt;2829|4364-&gt;2830|4398-&gt;2837|4560-&gt;2972|4585-&gt;2975|4719-&gt;3082|4734-&gt;3087|4765-&gt;3096|4829-&gt;3130|4868-&gt;3142|5843-&gt;4088|5873-&gt;4089|5918-&gt;4105|5948-&gt;4106|6010-&gt;4139|6040-&gt;4140|6073-&gt;4145|6181-&gt;4224|6211-&gt;4225|6243-&gt;4229|6309-&gt;4267|6338-&gt;4268|6367-&gt;4269|6401-&gt;4274|6431-&gt;4275|6463-&gt;4279|6528-&gt;4316|6557-&gt;4317|6588-&gt;4320|6617-&gt;4321|6651-&gt;4327|6778-&gt;4425|6808-&gt;4426|6841-&gt;4431|6944-&gt;4506|6973-&gt;4507|7004-&gt;4510
+                  LINES: 27-&gt;1|32-&gt;1|34-&gt;3|54-&gt;23|54-&gt;23|54-&gt;23|54-&gt;23|57-&gt;26|57-&gt;26|57-&gt;26|60-&gt;29|60-&gt;29|60-&gt;29|66-&gt;35|66-&gt;35|66-&gt;35|69-&gt;38|69-&gt;38|69-&gt;38|72-&gt;41|72-&gt;41|72-&gt;41|96-&gt;65|96-&gt;65|96-&gt;65|97-&gt;66|98-&gt;67|98-&gt;67|100-&gt;69|100-&gt;69|100-&gt;69|102-&gt;71|103-&gt;72|140-&gt;109|140-&gt;109|140-&gt;109|140-&gt;109|142-&gt;111|142-&gt;111|143-&gt;112|143-&gt;112|143-&gt;112|144-&gt;113|145-&gt;114|145-&gt;114|145-&gt;114|145-&gt;114|145-&gt;114|146-&gt;115|147-&gt;116|147-&gt;116|148-&gt;117|148-&gt;117|150-&gt;119|151-&gt;120|151-&gt;120|152-&gt;121|154-&gt;123|154-&gt;123|155-&gt;124
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>repodetails.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">repodetails.template.scala</span></div><h1>repodetails.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="nc" id="L24">object repodetails extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template1[Models.RepositoryProfile,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*1.2*/(Details: Models.RepositoryProfile):play.twirl.api.HtmlFormat.Appendable = {
+<span class="nc" id="L28">    _display_ {</span>
+      {
+
+
+<span class="nc" id="L32">Seq[Any](format.raw/*1.37*/(&quot;&quot;&quot;</span>
+
+<span class="nc" id="L34">&quot;&quot;&quot;),format.raw/*3.1*/(&quot;&quot;&quot;&lt;head&gt;</span>
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&quot;&gt;
+&lt;/head&gt;
+&lt;section style=&quot; margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px&quot;&gt;
+  &lt;div class=&quot;header&quot; style=&quot;padding: 30px;
+	  text-align: center;
+	  background: #1abc9c;
+	  color: white;
+	  font-size: 30px;&quot;&gt;
+    
+<span class="nc" id="L45">  		&lt;h2&gt; Repository Details : &lt;b&gt;&quot;&quot;&quot;),_display_(/*14.35*/Details/*14.42*/.repoName),format.raw/*14.51*/(&quot;&quot;&quot;&lt;/b&gt;&lt;/h2&gt;</span>
+
+		  &lt;div class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+			&lt;div style=&quot;padding: 5px;margin: 20px;background-color: #dee2e1;;border-radius: 5px;&quot;&gt;
+			  &lt;table style=&quot;
+				border-collapse: collapse;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+				 &lt;!-- &lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+					&lt;tr&gt;
+					  &lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Owner&lt;/th&gt;
+					  &lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Repository&lt;/th&gt;
+					  &lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Topics&lt;/th&gt;
+	  
+					&lt;/tr&gt;
+				  &lt;/thead&gt;  --&gt;
+				  &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+					
+				
+					&lt;tr style=&quot;height: 50px &quot;&gt;
+					  &lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Repository Name 📂 &lt;/td&gt;
+<span class="nc" id="L65">					  &lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&lt;b &gt;&quot;&quot;&quot;),_display_(/*34.65*/Details/*34.72*/.repoName),format.raw/*34.81*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*34.82*/(&quot;&quot;&quot;&lt;/b&gt;&lt;/td&gt;</span>
+
+					  &lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Repository Owner 👨‍💻 &lt;/td&gt;
+<span class="nc" id="L68">					  &lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&lt;a href=&quot;/&quot;&gt;&quot;&quot;&quot;),_display_(/*37.73*/Details/*37.80*/.ownerName),format.raw/*37.90*/(&quot;&quot;&quot;&lt;/a&gt;&lt;/td&gt;</span>
+
+					  &lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Language 📑 &lt;/td&gt;
+<span class="nc" id="L71">					  &lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&quot;&quot;&quot;),_display_(/*40.73*/Details/*40.80*/.language),format.raw/*40.89*/(&quot;&quot;&quot;&lt;/b&gt;&lt;/td&gt;</span>
+					
+					&lt;/tr&gt;
+
+					&lt;tr style=&quot;height: 50px &quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Open issues 📝 &lt;/td&gt;
+<span class="nc" id="L77">						&lt;td style=&quot;background-color: #dee2e1;width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*46.60*/Details/*46.67*/.issuesCount),format.raw/*46.79*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+  
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Creation Date 📅 &lt;/td&gt;
+<span class="nc" id="L80">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*49.61*/Details/*49.68*/.created),format.raw/*49.76*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Size 📦  &lt;/td&gt;
+<span class="nc" id="L83">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*52.61*/Details/*52.68*/.size),format.raw/*52.73*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*52.74*/(&quot;&quot;&quot;&lt;span&gt;MB&lt;/span&gt;&lt;/td&gt;</span>
+					  &lt;/tr&gt; 
+
+					  &lt;tr style=&quot;height: 50px &quot;&gt;
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Star Count ⭐ &lt;/td&gt;
+<span class="nc" id="L88">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*57.61*/Details/*57.68*/.stars),format.raw/*57.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Watch Count 👁‍🗨 &lt;/td&gt;
+<span class="nc" id="L91">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*60.61*/Details/*60.68*/.watch),format.raw/*60.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+
+						&lt;td style=&quot;background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Forks 📩 &lt;/td&gt;
+<span class="nc" id="L94">						&lt;td style=&quot;background-color: #dee2e1; width: 200px;&quot;&gt;&quot;&quot;&quot;),_display_(/*63.61*/Details/*63.68*/.watch),format.raw/*63.74*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+					  &lt;/tr&gt; 
+
+ 
+				  &lt;/tbody&gt; 
+				&lt;/table&gt;
+
+				&lt;table style=&quot;
+				border-collapse: collapse;
+				border: 1px solid #ddd;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+
+				  	&lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+
+						&lt;tr style=&quot;height: 50px &quot;&gt;
+							&lt;td style=&quot;border: 1px solid rgb(20, 107, 71);background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Description 💭 &lt;/td&gt;
+<span class="nc" id="L110">							&lt;td style=&quot;background-color: #dee2e1;width :80%;&quot;&gt;&quot;&quot;&quot;),_display_(/*79.59*/Details/*79.66*/.description),format.raw/*79.78*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+						&lt;/tr&gt; 
+
+					&lt;/tbody&gt;
+				&lt;/table&gt;
+
+				&lt;table style=&quot;
+				border-collapse: collapse;
+				border: 1px solid #ddd;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+
+				  	&lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+
+						&lt;tr style=&quot;height: 50px &quot;&gt;
+
+							&lt;td style=&quot;border: 1px solid rgb(20, 107, 71);background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;&quot;&gt;Topics 🪧&lt;/td&gt;
+							&lt;td style=&quot;background-color: #dee2e1;width :80%;&quot;&gt;
+<span class="nc" id="L127">								&quot;&quot;&quot;),_display_(/*96.10*/for(topic &lt;- Details.getTopicsList()) yield /*96.47*/{_display_(Seq[Any](format.raw/*96.48*/(&quot;&quot;&quot;</span>
+									&quot;&quot;&quot;),format.raw/*97.10*/(&quot;&quot;&quot;&lt;div style=&quot;display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 4px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;&quot;&gt; &quot;&quot;&quot;),_display_(/*97.177*/topic),format.raw/*97.182*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*97.183*/(&quot;&quot;&quot;&lt;/div&gt; 
+<span class="nc" id="L129">								&quot;&quot;&quot;)))}),format.raw/*98.10*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L130">							&quot;&quot;&quot;),format.raw/*99.8*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+						&lt;/tr&gt; 
+
+					&lt;/tbody&gt;
+				&lt;/table&gt;
+
+			
+
+			&lt;/div&gt;
+
+		&lt;/div&gt;
+      
+
+		&lt;center&gt;
+			&lt;button
+			onclick=&quot;window.location.href='#Issues';&quot;
+			style=&quot;background-color: #641515;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;&quot; &gt; Issues 📜 &lt;/button&gt;
+	
+			&lt;button
+			onclick=&quot;window.location.href='#Collaborator';&quot;
+			style=&quot;background-color: #223779;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;&quot; &gt; Collaborators 👨‍💻 &lt;/button&gt;
+			
+			&lt;button
+			onclick=&quot;onCommitsClicked()&quot;
+			style=&quot;background-color: #075c4e;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;&quot; &gt; Commits 📥 &lt;/button&gt;
+	
+			&lt;button
+<span class="nc" id="L184">			onclick=&quot;window.location.href='&quot;&quot;&quot;),_display_(/*153.36*/Details/*153.43*/.repoLink),format.raw/*153.52*/(&quot;&quot;&quot;';&quot;</span>
+			 style=&quot;background-color: #b9411c;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;&quot; &gt; Code 📄 &lt;/button&gt;
+
+			&lt;button
+			onclick=&quot;window.location.href='/statistics/';&quot;
+			style=&quot;background-color: #344147;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;&quot; &gt; Issue Statistics 📊 &lt;/button&gt;
+	
+		  &lt;/center&gt;
+		
+
+ 	 &lt;/div&gt;
+ 	 &lt;section id=&quot;CommitsLoading&quot; style=&quot;display:none; margin: 0;font-family: sans-serif;font-weight: 100;&quot;&gt;
+ 		&lt;center&gt; &lt;h3&gt; &lt;i class=&quot;fa fa-spinner fa-spin&quot;&gt;&lt;/i&gt; Loading  &lt;/h3&gt; &lt;/center&gt;
+ 	 &lt;/section&gt;
+
+
+  
+	  &lt;div  id=&quot;Issues&quot; class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+		&lt;div style=&quot;padding: 10px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;&quot;&gt;
+
+<span class="nc" id="L222">			&lt;center&gt; &lt;h3&gt;Showing  &lt;span style=&quot; font-size: 30px; color:rgb(18, 105, 69)&quot;&gt;&quot;&quot;&quot;),_display_(/*191.82*/Details/*191.89*/.issueList.size()),format.raw/*191.106*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*191.107*/(&quot;&quot;&quot;&lt;/span&gt;  Latest issues &lt;/h3&gt;&lt;/center&gt;</span>
+			
+		  &lt;table style=&quot;
+			border-collapse: collapse;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+
+			&lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+
+				&lt;tr&gt;
+				&lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Issue Number&lt;/th&gt;
+				&lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Issue Title&lt;/th&gt;
+				&lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Raised Time&lt;/th&gt;	 
+				&lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;State&lt;/th&gt;
+					
+				&lt;/tr&gt;
+
+			&lt;/thead&gt;	
+			    
+			  &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+				
+			
+			
+
+			
+<span class="nc" id="L247">					&quot;&quot;&quot;),_display_(/*216.7*/for(issue &lt;- Details.issueList) yield /*216.38*/{_display_(Seq[Any](format.raw/*216.39*/(&quot;&quot;&quot;</span>
+					&quot;&quot;&quot;),format.raw/*217.6*/(&quot;&quot;&quot;&lt;tr style=&quot;height: 50px &quot;&gt;
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&quot;&quot;&quot;),_display_(/*218.99*/issue/*218.104*/.issueNumber),format.raw/*218.116*/(&quot;&quot;&quot;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&quot;&quot;&quot;),_display_(/*220.99*/issue/*220.104*/.issueTitle),format.raw/*220.115*/(&quot;&quot;&quot;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;&quot;&gt;&quot;&quot;&quot;),_display_(/*222.99*/issue/*222.104*/.issueCreatedDate),format.raw/*222.121*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*222.122*/(&quot;&quot;&quot;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 10px; &quot;&gt;&lt;span style=&quot;color: &quot;&quot;&quot;),_display_(/*224.120*/issue/*224.125*/.stateColor),format.raw/*224.136*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*224.137*/(&quot;&quot;&quot;; font-size: 25px;&quot;&gt;&quot;&quot;&quot;),_display_(/*224.158*/issue/*224.163*/.issueState),format.raw/*224.174*/(&quot;&quot;&quot;&lt;/span&gt;&lt;/td&gt;
+					&lt;/tr&gt; 
+<span class="nc" id="L257">					&quot;&quot;&quot;)))}),format.raw/*226.7*/(&quot;&quot;&quot;</span>
+			
+			  
+<span class="nc" id="L260">			  &quot;&quot;&quot;),format.raw/*229.6*/(&quot;&quot;&quot;&lt;/tbody&gt; </span>
+			&lt;/table&gt;
+		 &lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div id=&quot;Collaborator&quot; class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+		 &lt;div style=&quot;padding: 10px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;&quot;&gt;
+
+			&lt;center&gt; &lt;h3&gt;Collaborators&lt;/h3&gt;&lt;/center&gt;
+		  &lt;table style=&quot;
+			border-collapse: collapse;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+
+			&lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+
+				&lt;tr&gt;
+				&lt;th style=&quot;border: 1px solid rgb(211, 211, 211); padding: 20px;&quot;&gt;&lt;/th&gt;
+				&lt;th style=&quot;border: 1px solid rgb(211, 211, 211); padding: 20px;&quot;&gt;Name&lt;/th&gt;
+				&lt;th  style=&quot;border: 1px solid rgb(211, 211, 211); padding: 20px;&quot;&gt;ID&lt;/th&gt;	 
+				&lt;th  style=&quot;border: 1px solid rgb(211, 211, 211); padding: 20px;&quot;&gt;Contribution Count&lt;/th&gt;
+				&lt;th style=&quot;border: 1px solid rgb(211, 211, 211); padding: 20px;&quot;&gt; &lt;/th&gt;
+					
+				&lt;/tr&gt;
+
+			&lt;/thead&gt;	
+			    
+			  &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+				
+			
+			
+
+			
+<span class="nc" id="L292">					&quot;&quot;&quot;),_display_(/*261.7*/for(Collaborator &lt;- Details.collabList) yield /*261.46*/{_display_(Seq[Any](format.raw/*261.47*/(&quot;&quot;&quot;</span>
+					&quot;&quot;&quot;),format.raw/*262.6*/(&quot;&quot;&quot;&lt;tr style=&quot;height: 50px &quot;&gt;
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1;padding: 20px; &quot;&gt; &lt;img src=&quot;&quot;&quot;),_display_(/*263.109*/Collaborator/*263.121*/.ContributorAvatarURL),format.raw/*263.142*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*263.143*/(&quot;&quot;&quot;alt=&quot;Avatar&quot; width=&quot;100&quot; height=&quot;100&quot;&gt;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;&quot;&gt;&quot;&quot;&quot;),_display_(/*265.99*/Collaborator/*265.111*/.ContributorName),format.raw/*265.127*/(&quot;&quot;&quot;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;&quot;&gt;&quot;&quot;&quot;),_display_(/*267.99*/Collaborator/*267.111*/.ContributorID),format.raw/*267.125*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*267.126*/(&quot;&quot;&quot;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;&quot;&gt;&quot;&quot;&quot;),_display_(/*269.99*/Collaborator/*269.111*/.ContributorContributions),format.raw/*269.136*/(&quot;&quot;&quot;&lt;/td&gt;
+
+						&lt;td style=&quot;border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;&quot;&gt;
+						
+							&lt;button
+							onclick=&quot;window.location.href='/user/&quot;&quot;&quot;),_display_(/*274.46*/Collaborator/*274.58*/.ContributorName),format.raw/*274.74*/(&quot;&quot;&quot;'&quot;
+							style=&quot;background-color: #ca1d65;
+							border: none;
+							color: white;
+							padding: 17px 25px;
+							text-align: center;
+							text-decoration: none;
+							display: inline-block;
+							font-size: 16px;
+							margin: 4px 2px;
+							cursor: pointer;&quot; &gt; Go to Profile 👨‍💻 &lt;/button&gt;
+						
+						&lt;/td&gt;
+					&lt;/tr&gt; 
+<span class="nc" id="L319">					&quot;&quot;&quot;)))}),format.raw/*288.7*/(&quot;&quot;&quot;</span>
+			
+			  
+<span class="nc" id="L322">			  &quot;&quot;&quot;),format.raw/*291.6*/(&quot;&quot;&quot;&lt;/tbody&gt; </span>
+			&lt;/table&gt;
+		 &lt;/div&gt;
+
+	  &lt;/div&gt;
+  
+	  &lt;button style=&quot;display: none;
+	  position: fixed;
+	  bottom: 20px;
+	  right: 30px;
+	  z-index: 99;
+	  font-size: 15px;
+	  border: none;
+	  outline: none;
+	  background-color: rgb(15, 43, 80);
+	  color: rgb(247, 247, 247);
+	  cursor: pointer;
+	  padding: 10px;&quot; onclick=&quot;topFunction()&quot; id=&quot;myBtn&quot; title=&quot;Go to top&quot;&gt; ⬆ Back to Details&lt;/button&gt;
+
+	&lt;button style=&quot;display: block;
+	position: fixed;
+	top: 20px;
+	left: 30px;
+	z-index: 99;
+	font-size: 15px;
+	border: none;
+	outline: none;
+	background-color: rgb(218, 218, 218);
+	color: rgb(7, 75, 18) ;
+	cursor: pointer;
+	padding: 5px;&quot; onclick=&quot;window.location.href='/'&quot; title=&quot;Go Back&quot;&gt; ⬅ Back &lt;/button&gt;
+
+  
+&lt;/section&gt;
+&lt;script&gt;
+	//Get the button
+	var mybutton = document.getElementById(&quot;myBtn&quot;);
+	
+	// When the user scrolls down 20px from the top of the document, show the button
+<span class="nc" id="L361">	window.onscroll = function() &quot;&quot;&quot;),format.raw/*330.31*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*330.32*/(&quot;&quot;&quot;scrollFunction()&quot;&quot;&quot;),format.raw/*330.48*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*330.49*/(&quot;&quot;&quot;;</span>
+	
+<span class="nc" id="L363">	function scrollFunction() &quot;&quot;&quot;),format.raw/*332.28*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*332.29*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L364">	  &quot;&quot;&quot;),format.raw/*333.4*/(&quot;&quot;&quot;if (document.body.scrollTop &gt; 150 || document.documentElement.scrollTop &gt; 150) &quot;&quot;&quot;),format.raw/*333.83*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*333.84*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L365">		&quot;&quot;&quot;),format.raw/*334.3*/(&quot;&quot;&quot;mybutton.style.display = &quot;block&quot;;</span>
+<span class="nc" id="L366">	  &quot;&quot;&quot;),format.raw/*335.4*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*335.5*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*335.6*/(&quot;&quot;&quot;else &quot;&quot;&quot;),format.raw/*335.11*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*335.12*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L367">		&quot;&quot;&quot;),format.raw/*336.3*/(&quot;&quot;&quot;mybutton.style.display = &quot;none&quot;;</span>
+<span class="nc" id="L368">	  &quot;&quot;&quot;),format.raw/*337.4*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*337.5*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L369">	&quot;&quot;&quot;),format.raw/*338.2*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*338.3*/(&quot;&quot;&quot;</span>
+	
+<span class="nc" id="L371">	&quot;&quot;&quot;),format.raw/*340.2*/(&quot;&quot;&quot;// When the user clicks on the button, scroll to the top of the document</span>
+<span class="nc" id="L372">	function topFunction() &quot;&quot;&quot;),format.raw/*341.25*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*341.26*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L373">	  &quot;&quot;&quot;),format.raw/*342.4*/(&quot;&quot;&quot;document.body.scrollTop = 0;</span>
+	  document.documentElement.scrollTop = 0;
+<span class="nc" id="L375">	&quot;&quot;&quot;),format.raw/*344.2*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*344.3*/(&quot;&quot;&quot;</span>
+	
+<span class="nc" id="L377">	&quot;&quot;&quot;),format.raw/*346.2*/(&quot;&quot;&quot;//When Commits is Clicked </span>
+<span class="nc" id="L378">	function onCommitsClicked() &quot;&quot;&quot;),format.raw/*347.30*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*347.31*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L379">	 &quot;&quot;&quot;),format.raw/*348.3*/(&quot;&quot;&quot;//Display Loader</span>
+		var commitLoader = document.getElementById(&quot;CommitsLoading&quot;);	
+		commitLoader.style.display = &quot;block&quot;;	
+<span class="nc" id="L382">		window.location.href='/repos/&quot;&quot;&quot;),_display_(/*351.33*/Details/*351.40*/.ownerName),format.raw/*351.50*/(&quot;&quot;&quot;/&quot;&quot;&quot;),_display_(/*351.52*/Details/*351.59*/.repoName),format.raw/*351.68*/(&quot;&quot;&quot;/commits';</span>
+<span class="nc" id="L383">	&quot;&quot;&quot;),format.raw/*352.2*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*352.3*/(&quot;&quot;&quot;</span>
+	
+<span class="nc" id="L385">	&quot;&quot;&quot;),format.raw/*354.2*/(&quot;&quot;&quot;&lt;/script&gt;&quot;&quot;&quot;))</span>
+      }
+    }
+  }
+
+<span class="nc" id="L390">  def render(Details:Models.RepositoryProfile): play.twirl.api.HtmlFormat.Appendable = apply(Details)</span>
+
+<span class="nc" id="L392">  def f:((Models.RepositoryProfile) =&gt; play.twirl.api.HtmlFormat.Appendable) = (Details) =&gt; apply(Details)</span>
+
+<span class="nc" id="L394">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  SOURCE: app/views/repodetails.scala.html
+                  HASH: 8fa46b0ad51fa506be231387bc489f642e6b9fa2
+                  MATRIX: 931-&gt;1|1061-&gt;36|1091-&gt;40|1573-&gt;495|1589-&gt;502|1619-&gt;511|2561-&gt;1426|2577-&gt;1433|2607-&gt;1442|2636-&gt;1443|2861-&gt;1641|2877-&gt;1648|2908-&gt;1658|3122-&gt;1845|3138-&gt;1852|3168-&gt;1861|3423-&gt;2089|3439-&gt;2096|3472-&gt;2108|3676-&gt;2285|3692-&gt;2292|3721-&gt;2300|3915-&gt;2467|3931-&gt;2474|3957-&gt;2479|3986-&gt;2480|4249-&gt;2716|4265-&gt;2723|4292-&gt;2729|4495-&gt;2905|4511-&gt;2912|4538-&gt;2918|4732-&gt;3085|4748-&gt;3092|4775-&gt;3098|5295-&gt;3591|5311-&gt;3598|5344-&gt;3610|5864-&gt;4103|5917-&gt;4140|5956-&gt;4141|5995-&gt;4152|6190-&gt;4319|6217-&gt;4324|6247-&gt;4325|6296-&gt;4343|6332-&gt;4352|7488-&gt;5480|7505-&gt;5487|7536-&gt;5496|8687-&gt;6619|8704-&gt;6626|8744-&gt;6643|8775-&gt;6644|9487-&gt;7329|9535-&gt;7360|9575-&gt;7361|9610-&gt;7368|9764-&gt;7494|9780-&gt;7499|9815-&gt;7511|9950-&gt;7618|9966-&gt;7623|10000-&gt;7634|10135-&gt;7741|10151-&gt;7746|10191-&gt;7763|10222-&gt;7764|10379-&gt;7892|10395-&gt;7897|10429-&gt;7908|10460-&gt;7909|10510-&gt;7930|10526-&gt;7935|10560-&gt;7946|10624-&gt;7979|10671-&gt;7998|11748-&gt;9048|11804-&gt;9087|11844-&gt;9088|11879-&gt;9095|12044-&gt;9231|12067-&gt;9243|12111-&gt;9264|12142-&gt;9265|12315-&gt;9410|12338-&gt;9422|12377-&gt;9438|12512-&gt;9545|12535-&gt;9557|12572-&gt;9571|12603-&gt;9572|12738-&gt;9679|12761-&gt;9691|12809-&gt;9716|13014-&gt;9893|13036-&gt;9905|13074-&gt;9921|13461-&gt;10277|13508-&gt;10296|14479-&gt;11238|14509-&gt;11239|14554-&gt;11255|14584-&gt;11256|14646-&gt;11289|14676-&gt;11290|14709-&gt;11295|14817-&gt;11374|14847-&gt;11375|14879-&gt;11379|14945-&gt;11417|14974-&gt;11418|15003-&gt;11419|15037-&gt;11424|15067-&gt;11425|15099-&gt;11429|15164-&gt;11466|15193-&gt;11467|15224-&gt;11470|15253-&gt;11471|15287-&gt;11477|15414-&gt;11575|15444-&gt;11576|15477-&gt;11581|15580-&gt;11656|15609-&gt;11657|15643-&gt;11663|15729-&gt;11720|15759-&gt;11721|15791-&gt;11725|15977-&gt;11883|15994-&gt;11890|16026-&gt;11900|16056-&gt;11902|16073-&gt;11909|16104-&gt;11918|16145-&gt;11931|16174-&gt;11932|16208-&gt;11938
+                  LINES: 27-&gt;1|32-&gt;1|34-&gt;3|45-&gt;14|45-&gt;14|45-&gt;14|65-&gt;34|65-&gt;34|65-&gt;34|65-&gt;34|68-&gt;37|68-&gt;37|68-&gt;37|71-&gt;40|71-&gt;40|71-&gt;40|77-&gt;46|77-&gt;46|77-&gt;46|80-&gt;49|80-&gt;49|80-&gt;49|83-&gt;52|83-&gt;52|83-&gt;52|83-&gt;52|88-&gt;57|88-&gt;57|88-&gt;57|91-&gt;60|91-&gt;60|91-&gt;60|94-&gt;63|94-&gt;63|94-&gt;63|110-&gt;79|110-&gt;79|110-&gt;79|127-&gt;96|127-&gt;96|127-&gt;96|128-&gt;97|128-&gt;97|128-&gt;97|128-&gt;97|129-&gt;98|130-&gt;99|184-&gt;153|184-&gt;153|184-&gt;153|222-&gt;191|222-&gt;191|222-&gt;191|222-&gt;191|247-&gt;216|247-&gt;216|247-&gt;216|248-&gt;217|249-&gt;218|249-&gt;218|249-&gt;218|251-&gt;220|251-&gt;220|251-&gt;220|253-&gt;222|253-&gt;222|253-&gt;222|253-&gt;222|255-&gt;224|255-&gt;224|255-&gt;224|255-&gt;224|255-&gt;224|255-&gt;224|255-&gt;224|257-&gt;226|260-&gt;229|292-&gt;261|292-&gt;261|292-&gt;261|293-&gt;262|294-&gt;263|294-&gt;263|294-&gt;263|294-&gt;263|296-&gt;265|296-&gt;265|296-&gt;265|298-&gt;267|298-&gt;267|298-&gt;267|298-&gt;267|300-&gt;269|300-&gt;269|300-&gt;269|305-&gt;274|305-&gt;274|305-&gt;274|319-&gt;288|322-&gt;291|361-&gt;330|361-&gt;330|361-&gt;330|361-&gt;330|363-&gt;332|363-&gt;332|364-&gt;333|364-&gt;333|364-&gt;333|365-&gt;334|366-&gt;335|366-&gt;335|366-&gt;335|366-&gt;335|366-&gt;335|367-&gt;336|368-&gt;337|368-&gt;337|369-&gt;338|369-&gt;338|371-&gt;340|372-&gt;341|372-&gt;341|373-&gt;342|375-&gt;344|375-&gt;344|377-&gt;346|378-&gt;347|378-&gt;347|379-&gt;348|382-&gt;351|382-&gt;351|382-&gt;351|382-&gt;351|382-&gt;351|382-&gt;351|383-&gt;352|383-&gt;352|385-&gt;354
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

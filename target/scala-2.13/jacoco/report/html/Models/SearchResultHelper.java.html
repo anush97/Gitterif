@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SearchResultHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Models</a> &gt; <span class="el_source">SearchResultHelper.java</span></div><h1>SearchResultHelper.java</h1><pre class="source lang-java linenums">package Models;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+import Utils.Cache;
+
+import javax.inject.Inject;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import play.libs.Json;
+import play.libs.ws.WSClient;
+import play.libs.ws.WSRequest;
+
+/**
+ * Class with functions and parameters to facilitate Searched Data Processing and Creation of GithubResult
+ * @author Elvin Rejimone
+ *
+ */
+public class SearchResultHelper{
+	
+	  
+<span class="fc" id="L29">    public ArrayList&lt;String&gt; allSearches = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L30">    LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; allResult = new LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;();</span>
+<span class="fc" id="L31">    public static HashMap&lt;String, JsonNode&gt; fullSearchData = new HashMap&lt;String, JsonNode&gt;();</span>
+
+	private WSClient ws;
+	
+	@Inject
+<span class="fc" id="L36">	public SearchResultHelper(WSClient ws) {</span>
+<span class="fc" id="L37">		this.ws = ws;</span>
+<span class="fc" id="L38">	}</span>
+     
+	/**
+	 * Function that takes Response Object of type JsonNode and creates the List of GithubResult Objects and appends it to allResult and FullSearchData .
+	 * It returns allResult of Type LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;
+	 * @param query
+	 * @param obj
+	 * @return LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; allResult
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @author Elvin Rejimone
+	 */
+	public LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; getArrayofGithubResult(String query, JsonNode obj) throws InterruptedException, ExecutionException {
+<span class="fc" id="L51">		List&lt;GithubResult&gt; records = new ArrayList&lt;GithubResult&gt;();</span>
+<span class="fc" id="L52">		System.out.println(&quot;Size of Obj :: &quot;+obj.size());</span>
+		
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		for(JsonNode data:obj) {</span>
+<span class="fc" id="L55">			GithubResult result = new GithubResult(data.get(&quot;name&quot;).toString(),data.get(&quot;owner&quot;).findPath(&quot;login&quot;).toPrettyString(),data.get(&quot;topics&quot;),query, data.get(&quot;id&quot;).toString());</span>
+<span class="fc" id="L56">			fullSearchData.put(query, obj);</span>
+<span class="fc" id="L57">			records.add(result);			</span>
+<span class="fc" id="L58">		}</span>
+		
+<span class="fc" id="L60">		records = records.stream()</span>
+<span class="fc" id="L61">				.limit(10)</span>
+<span class="fc" id="L62">				.collect(Collectors.toList());</span>
+<span class="fc" id="L63">		addToTotalSearchList(query, (ArrayList&lt;GithubResult&gt;) records);</span>
+<span class="fc" id="L64">		System.out.println(allResult);</span>
+<span class="fc" id="L65">		return allResult;</span>
+	}
+	
+	/**
+	 * Function to add a GithubResult object to search result variable allResult and limit it to 10 results in total
+	 * Also checks for duplicated result and overwrites it in the correct position
+	 * @param query
+	 * @param singleRecord
+	 *  @author Elvin Rejimone
+	 */
+	public void addToTotalSearchList(String query, ArrayList&lt;GithubResult&gt; singleRecord) {
+		
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if(allSearches.contains(query)) {</span>
+<span class="fc" id="L78">			allResult.remove(query);</span>
+<span class="fc" id="L79">			allSearches.remove(allSearches.indexOf(query));</span>
+		}
+		
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if(allSearches.size()==10) {</span>
+<span class="nc" id="L83">			String removingQuery = allSearches.get(0);</span>
+<span class="nc" id="L84">			allResult.remove(removingQuery);</span>
+<span class="nc" id="L85">			allSearches.remove(0);</span>
+		}
+<span class="fc" id="L87">		allSearches.add(query);</span>
+<span class="fc" id="L88">		allResult.put(query, singleRecord);</span>
+		
+<span class="fc" id="L90">	System.out.println(allSearches.toString());</span>
+<span class="fc" id="L91">	}</span>
+	
+	
+	
+	/**
+	 * Search- hit the api and search the for the word
+	 * 
+	 * @author Elvin Rejimone
+	 * @param query - search string
+	 * @param type  To identify the API call
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; searchGithub(String query, Cache cache, Boolean USE_CACHE)
+			throws InterruptedException, ExecutionException {
+<span class="fc" id="L107">		WSRequest req = null;</span>
+<span class="fc" id="L108">		LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; finalList = null;</span>
+<span class="fc" id="L109">			String querytoCheckCache = &quot;https://api.github.com/search/repositories?q=&quot; + query;</span>
+<span class="fc" id="L110">			JsonNode obj = cache.get(querytoCheckCache);</span>
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">			if (obj != null &amp;&amp; USE_CACHE) {</span>
+<span class="nc" id="L112">				System.out.println(&quot;Taking from Cache&quot;);</span>
+			} else {
+<span class="fc" id="L114">				System.out.println(&quot;Not Found in Cache, requesting and Storing in Cache&quot;);</span>
+<span class="fc" id="L115">				System.out.println(&quot;Query : https://api.github.com/search/repositories?q=&quot; + query);</span>
+<span class="fc" id="L116">				System.out.println();</span>
+<span class="fc" id="L117">				req = ws.url(&quot;https://api.github.com/search/repositories?q=&quot; + query + &quot;&amp;sort=updated&quot;)</span>
+<span class="fc" id="L118">						.addHeader(&quot;Authorization&quot;,</span>
+								&quot;token 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&quot;);
+<span class="fc" id="L120">				CompletionStage&lt;JsonNode&gt; res = req.get().thenApply(r -&gt; r.asJson());</span>
+<span class="fc" id="L121">				obj = Json.toJson(res.toCompletableFuture().get().findPath(&quot;items&quot;));</span>
+<span class="fc" id="L122">				cache.put(querytoCheckCache, obj);</span>
+			}
+
+<span class="fc" id="L125">			finalList = getArrayofGithubResult(query, obj);</span>
+<span class="fc" id="L126">		return finalList;</span>
+	
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

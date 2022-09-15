@@ -1,0 +1,354 @@
+@(Details: Models.RepositoryProfile)
+
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<section style=" margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px">
+  <div class="header" style="padding: 30px;
+	  text-align: center;
+	  background: #1abc9c;
+	  color: white;
+	  font-size: 30px;">
+    
+  		<h2> Repository Details : <b>@Details.repoName</b></h2>
+
+		  <div class="container" style="display: flex;justify-content: center; ">
+			<div style="padding: 5px;margin: 20px;background-color: #dee2e1;;border-radius: 5px;">
+			  <table style="
+				border-collapse: collapse;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+				 <!-- <thead style="background-color: #42a386; padding: 10px; height:50px ;">
+					<tr>
+					  <th style="border: 1px solid rgb(211, 211, 211);">Owner</th>
+					  <th  style="border: 1px solid rgb(211, 211, 211);">Repository</th>
+					  <th  style="border: 1px solid rgb(211, 211, 211);">Topics</th>
+	  
+					</tr>
+				  </thead>  -->
+				  <tbody style="background-color: #dee2e1; text-align: center;">
+					
+				
+					<tr style="height: 50px ">
+					  <td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Repository Name 📂 </td>
+					  <td style="background-color: #dee2e1;width: 200px;"><b >@Details.repoName </b></td>
+
+					  <td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Repository Owner 👨‍💻 </td>
+					  <td style="background-color: #dee2e1;width: 200px;"><a href="/">@Details.ownerName</a></td>
+
+					  <td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Language 📑 </td>
+					  <td style="background-color: #dee2e1;width: 200px;"><b style="">@Details.language</b></td>
+					
+					</tr>
+
+					<tr style="height: 50px ">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Open issues 📝 </td>
+						<td style="background-color: #dee2e1;width: 200px;">@Details.issuesCount</td>
+  
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Creation Date 📅 </td>
+						<td style="background-color: #dee2e1; width: 200px;">@Details.created</td>
+
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Size 📦  </td>
+						<td style="background-color: #dee2e1; width: 200px;">@Details.size <span>MB</span></td>
+					  </tr> 
+
+					  <tr style="height: 50px ">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Star Count ⭐ </td>
+						<td style="background-color: #dee2e1; width: 200px;">@Details.stars</td>
+
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Watch Count 👁‍🗨 </td>
+						<td style="background-color: #dee2e1; width: 200px;">@Details.watch</td>
+
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Forks 📩 </td>
+						<td style="background-color: #dee2e1; width: 200px;">@Details.watch</td>
+					  </tr> 
+
+ 
+				  </tbody> 
+				</table>
+
+				<table style="
+				border-collapse: collapse;
+				border: 1px solid #ddd;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+
+				  	<tbody style="background-color: #dee2e1; text-align: center;">
+
+						<tr style="height: 50px ">
+							<td style="border: 1px solid rgb(20, 107, 71);background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Description 💭 </td>
+							<td style="background-color: #dee2e1;width :80%;">@Details.description</td>
+						</tr> 
+
+					</tbody>
+				</table>
+
+				<table style="
+				border-collapse: collapse;
+				border: 1px solid #ddd;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+
+				  	<tbody style="background-color: #dee2e1; text-align: center;">
+
+						<tr style="height: 50px ">
+
+							<td style="border: 1px solid rgb(20, 107, 71);background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Topics 🪧</td>
+							<td style="background-color: #dee2e1;width :80%;">
+								@for(topic <- Details.getTopicsList()){
+									<div style="display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 4px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;"> @topic </div> 
+								}
+							</td>
+						</tr> 
+
+					</tbody>
+				</table>
+
+			
+
+			</div>
+
+		</div>
+      
+
+		<center>
+			<button
+			onclick="window.location.href='#Issues';"
+			style="background-color: #641515;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;" > Issues 📜 </button>
+	
+			<button
+			onclick="window.location.href='#Collaborator';"
+			style="background-color: #223779;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;" > Collaborators 👨‍💻 </button>
+			
+			<button
+			onclick="onCommitsClicked()"
+			style="background-color: #075c4e;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;" > Commits 📥 </button>
+	
+			<button
+			onclick="window.location.href='@Details.repoLink';"
+			 style="background-color: #b9411c;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;" > Code 📄 </button>
+
+			<button
+			onclick="window.location.href='/statistics/';"
+			style="background-color: #344147;
+			border: none;
+			color: white;
+			padding: 17px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;" > Issue Statistics 📊 </button>
+	
+		  </center>
+		
+
+ 	 </div>
+ 	 <section id="CommitsLoading" style="display:none; margin: 0;font-family: sans-serif;font-weight: 100;">
+ 		<center> <h3> <i class="fa fa-spinner fa-spin"></i> Loading  </h3> </center>
+ 	 </section>
+
+
+  
+	  <div  id="Issues" class="container" style="display: flex;justify-content: center; ">
+		<div style="padding: 10px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;">
+
+			<center> <h3>Showing  <span style=" font-size: 30px; color:rgb(18, 105, 69)">@Details.issueList.size() </span>  Latest issues </h3></center>
+			
+		  <table style="
+			border-collapse: collapse;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+
+			<thead style="background-color: #42a386; padding: 10px; height:50px ;">
+
+				<tr>
+				<th style="border: 1px solid rgb(211, 211, 211);">Issue Number</th>
+				<th style="border: 1px solid rgb(211, 211, 211);">Issue Title</th>
+				<th  style="border: 1px solid rgb(211, 211, 211);">Raised Time</th>	 
+				<th  style="border: 1px solid rgb(211, 211, 211);">State</th>
+					
+				</tr>
+
+			</thead>	
+			    
+			  <tbody style="background-color: #dee2e1; text-align: center;">
+				
+			
+			
+
+			
+					@for(issue <- Details.issueList){
+					<tr style="height: 50px ">
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;">@issue.issueNumber</td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;">@issue.issueTitle</td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;">@issue.issueCreatedDate </td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 10px; "><span style="color: @issue.stateColor ; font-size: 25px;">@issue.issueState</span></td>
+					</tr> 
+					}
+			
+			  
+			  </tbody> 
+			</table>
+		 </div>
+		</div>
+		<div id="Collaborator" class="container" style="display: flex;justify-content: center; ">
+		 <div style="padding: 10px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;">
+
+			<center> <h3>Collaborators</h3></center>
+		  <table style="
+			border-collapse: collapse;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+
+			<thead style="background-color: #42a386; padding: 10px; height:50px ;">
+
+				<tr>
+				<th style="border: 1px solid rgb(211, 211, 211); padding: 20px;"></th>
+				<th style="border: 1px solid rgb(211, 211, 211); padding: 20px;">Name</th>
+				<th  style="border: 1px solid rgb(211, 211, 211); padding: 20px;">ID</th>	 
+				<th  style="border: 1px solid rgb(211, 211, 211); padding: 20px;">Contribution Count</th>
+				<th style="border: 1px solid rgb(211, 211, 211); padding: 20px;"> </th>
+					
+				</tr>
+
+			</thead>	
+			    
+			  <tbody style="background-color: #dee2e1; text-align: center;">
+				
+			
+			
+
+			
+					@for(Collaborator <- Details.collabList){
+					<tr style="height: 50px ">
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1;padding: 20px; "> <img src=@Collaborator.ContributorAvatarURL alt="Avatar" width="100" height="100"></td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;">@Collaborator.ContributorName</td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;">@Collaborator.ContributorID </td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;">@Collaborator.ContributorContributions</td>
+
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 20px;">
+						
+							<button
+							onclick="window.location.href='/user/@Collaborator.ContributorName'"
+							style="background-color: #ca1d65;
+							border: none;
+							color: white;
+							padding: 17px 25px;
+							text-align: center;
+							text-decoration: none;
+							display: inline-block;
+							font-size: 16px;
+							margin: 4px 2px;
+							cursor: pointer;" > Go to Profile 👨‍💻 </button>
+						
+						</td>
+					</tr> 
+					}
+			
+			  
+			  </tbody> 
+			</table>
+		 </div>
+
+	  </div>
+  
+	  <button style="display: none;
+	  position: fixed;
+	  bottom: 20px;
+	  right: 30px;
+	  z-index: 99;
+	  font-size: 15px;
+	  border: none;
+	  outline: none;
+	  background-color: rgb(15, 43, 80);
+	  color: rgb(247, 247, 247);
+	  cursor: pointer;
+	  padding: 10px;" onclick="topFunction()" id="myBtn" title="Go to top"> ⬆ Back to Details</button>
+
+	<button style="display: block;
+	position: fixed;
+	top: 20px;
+	left: 30px;
+	z-index: 99;
+	font-size: 15px;
+	border: none;
+	outline: none;
+	background-color: rgb(218, 218, 218);
+	color: rgb(7, 75, 18) ;
+	cursor: pointer;
+	padding: 5px;" onclick="window.location.href='/'" title="Go Back"> ⬅ Back </button>
+
+  
+</section>
+<script>
+	//Get the button
+	var mybutton = document.getElementById("myBtn");
+	
+	// When the user scrolls down 20px from the top of the document, show the button
+	window.onscroll = function() {scrollFunction()};
+	
+	function scrollFunction() {
+	  if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+		mybutton.style.display = "block";
+	  } else {
+		mybutton.style.display = "none";
+	  }
+	}
+	
+	// When the user clicks on the button, scroll to the top of the document
+	function topFunction() {
+	  document.body.scrollTop = 0;
+	  document.documentElement.scrollTop = 0;
+	}
+	
+	//When Commits is Clicked 
+	function onCommitsClicked() {
+	 //Display Loader
+		var commitLoader = document.getElementById("CommitsLoading");	
+		commitLoader.style.display = "block";	
+		window.location.href='/repos/@Details.ownerName/@Details.repoName/commits';
+	}
+	
+	</script>

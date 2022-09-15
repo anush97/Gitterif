@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>topic.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">topic.template.scala</span></div><h1>topic.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="pc" id="L24">object topic extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template3[HashMap[String, ArrayList[Models.GithubResult]],List[String],play.mvc.Http.Request,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*1.2*/(results: HashMap[String, ArrayList[Models.GithubResult]], keys: List[String],request: play.mvc.Http.Request):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L28">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L32">Seq[Any](format.raw/*1.111*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L33">&quot;&quot;&quot;),format.raw/*2.1*/(&quot;&quot;&quot;&lt;script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'&gt;&lt;/script&gt;</span>
+<span class="fc" id="L34">&lt;script type='text/javascript' src='&quot;&quot;&quot;),_display_(/*3.38*/routes/*3.44*/.Assets.versioned(&quot;javascripts/index.js&quot;)),format.raw/*3.85*/(&quot;&quot;&quot;'&gt;&lt;/script&gt;  </span>
+
+<span class="fc" id="L36">&lt;section data-ws-url=&quot;&quot;&quot;&quot;),_display_(/*5.24*/routes/*5.30*/.HomeController.wsTopic.webSocketURL(request)),format.raw/*5.75*/(&quot;&quot;&quot;&quot; style=&quot; margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px&quot;&gt;</span>
+ 
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">  &quot;&quot;&quot;),_display_(/*7.4*/if(!results.isEmpty())/*7.26*/ {_display_(Seq[Any](format.raw/*7.28*/(&quot;&quot;&quot;    	</span>
+<span class="fc" id="L39">      &quot;&quot;&quot;),_display_(/*8.8*/for(key &lt;- keys) yield /*8.24*/{_display_(Seq[Any](format.raw/*8.25*/(&quot;&quot;&quot;</span>
+      &quot;&quot;&quot;),format.raw/*9.7*/(&quot;&quot;&quot;&lt;div class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+      &lt;div style=&quot;padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;&quot;&gt;
+       &lt;center&gt; &lt;span&gt;Showing results for the topic: &lt;h1 style=&quot;display:inline-block;margin-left: 10px;&quot;&gt;&quot;&quot;&quot;),_display_(/*11.107*/key),format.raw/*11.110*/(&quot;&quot;&quot;&lt;/h1&gt; &lt;/span&gt;&lt;/center&gt;
+        &lt;table style=&quot;width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+            &lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+              &lt;tr&gt;
+                &lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Owner&lt;/th&gt;
+                &lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Repository&lt;/th&gt;
+                &lt;th  style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Topics&lt;/th&gt;
+
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+              
+              &quot;&quot;&quot;),_display_(/*26.16*/for(obj &lt;- results.get(key) ) yield /*26.45*/{_display_(Seq[Any](format.raw/*26.46*/(&quot;&quot;&quot;
+                &quot;&quot;&quot;),format.raw/*27.17*/(&quot;&quot;&quot;&lt;tr style=&quot;height: 50px &quot;&gt;
+                &lt;td style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;&quot;&quot;&quot;),_display_(/*28.68*/obj/*28.71*/.ownerName),format.raw/*28.81*/(&quot;&quot;&quot;&lt;/td&gt;
+                &lt;td style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;&quot;&quot;&quot;),_display_(/*29.68*/obj/*29.71*/.repoName),format.raw/*29.80*/(&quot;&quot;&quot;&lt;/td&gt;
+                &lt;td style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;
+                  &quot;&quot;&quot;),_display_(/*31.20*/for(topic &lt;- obj.returnTopics()) yield /*31.52*/{_display_(Seq[Any](format.raw/*31.53*/(&quot;&quot;&quot;
+                   &quot;&quot;&quot;),format.raw/*32.20*/(&quot;&quot;&quot;&lt;div style=&quot;display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 3px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;&quot;&gt; &quot;&quot;&quot;),_display_(/*32.187*/topic),format.raw/*32.192*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*32.193*/(&quot;&quot;&quot;&lt;/div&gt; 
+                  &quot;&quot;&quot;)))}),format.raw/*33.20*/(&quot;&quot;&quot;
+                &quot;&quot;&quot;),format.raw/*34.17*/(&quot;&quot;&quot;&lt;/td&gt;
+              &lt;/tr&gt;
+              &quot;&quot;&quot;)))}),format.raw/*36.16*/(&quot;&quot;&quot;
+               
+            
+            &quot;&quot;&quot;),format.raw/*39.13*/(&quot;&quot;&quot;&lt;/tbody&gt; 
+          &lt;/table&gt;
+        &lt;/div&gt;
+         &lt;/div&gt;
+        
+<span class="fc" id="L75">        &quot;&quot;&quot;)))}),format.raw/*44.10*/(&quot;&quot;&quot;</span>
+
+<span class="pc" id="L77">&quot;&quot;&quot;)))}/*46.3*/else/*46.8*/{_display_(Seq[Any](format.raw/*46.9*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L78">  &quot;&quot;&quot;),format.raw/*47.3*/(&quot;&quot;&quot;&lt;h1&gt;Not Displaying&lt;/h1&gt;</span>
+<span class="fc" id="L79">&quot;&quot;&quot;)))}),format.raw/*48.2*/(&quot;&quot;&quot;</span>
+ 
+<span class="fc" id="L81">&quot;&quot;&quot;),format.raw/*50.1*/(&quot;&quot;&quot;&lt;/section&gt;</span>
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="fc" id="L87">  def render(results:HashMap[String, ArrayList[Models.GithubResult]],keys:List[String],request:play.mvc.Http.Request): play.twirl.api.HtmlFormat.Appendable = apply(results,keys,request)</span>
+
+<span class="nc" id="L89">  def f:((HashMap[String, ArrayList[Models.GithubResult]],List[String],play.mvc.Http.Request) =&gt; play.twirl.api.HtmlFormat.Appendable) = (results,keys,request) =&gt; apply(results,keys,request)</span>
+
+<span class="nc" id="L91">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  SOURCE: app/views/topic.scala.html
+                  HASH: b1ecf7117de11442ed39b5c3ae331bb3418e1909
+                  MATRIX: 983-&gt;1|1188-&gt;110|1216-&gt;112|1371-&gt;241|1385-&gt;247|1446-&gt;288|1512-&gt;328|1526-&gt;334|1591-&gt;379|1761-&gt;524|1791-&gt;546|1830-&gt;548|1869-&gt;562|1900-&gt;578|1938-&gt;579|1972-&gt;587|2298-&gt;885|2323-&gt;888|3033-&gt;1571|3078-&gt;1600|3117-&gt;1601|3163-&gt;1619|3285-&gt;1714|3297-&gt;1717|3328-&gt;1727|3429-&gt;1801|3441-&gt;1804|3471-&gt;1813|3592-&gt;1907|3640-&gt;1939|3679-&gt;1940|3728-&gt;1961|3923-&gt;2128|3950-&gt;2133|3980-&gt;2134|4039-&gt;2162|4085-&gt;2180|4159-&gt;2223|4232-&gt;2268|4346-&gt;2351|4369-&gt;2357|4381-&gt;2362|4419-&gt;2363|4450-&gt;2367|4506-&gt;2393|4538-&gt;2398
+                  LINES: 27-&gt;1|32-&gt;1|33-&gt;2|34-&gt;3|34-&gt;3|34-&gt;3|36-&gt;5|36-&gt;5|36-&gt;5|38-&gt;7|38-&gt;7|38-&gt;7|39-&gt;8|39-&gt;8|39-&gt;8|40-&gt;9|42-&gt;11|42-&gt;11|57-&gt;26|57-&gt;26|57-&gt;26|58-&gt;27|59-&gt;28|59-&gt;28|59-&gt;28|60-&gt;29|60-&gt;29|60-&gt;29|62-&gt;31|62-&gt;31|62-&gt;31|63-&gt;32|63-&gt;32|63-&gt;32|63-&gt;32|64-&gt;33|65-&gt;34|67-&gt;36|70-&gt;39|75-&gt;44|77-&gt;46|77-&gt;46|77-&gt;46|78-&gt;47|79-&gt;48|81-&gt;50
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StatsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">services</a> &gt; <span class="el_source">StatsService.java</span></div><h1>StatsService.java</h1><pre class="source lang-java linenums">package services;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.*;
+import javax.inject.Inject;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import play.libs.Json;
+
+
+import Models.*;
+
+
+/**
+ * @author ANUSHKA SHARMA
+ * 
+ * Calculate total number or words in issues, total_repetition of words, total characters
+ * max_frequency of a word, minimum frequency of a word, unique words as 
+ * Statistics along with Map (key- words, value- count).
+ */
+
+<span class="fc" id="L34">public class StatsService {</span>
+    public Integer total_words;
+	public Integer total_repetition;
+	public Integer total_char;
+	public Integer max_freq;
+	public Integer min_freq;
+	public Integer unique_words; 
+    long c ,r, unique,char_c;
+<span class="fc" id="L42">    ArrayList&lt;Integer&gt; calc = new ArrayList&lt;Integer&gt;();</span>
+
+ 	public StatsModel get_Count(ArrayList&lt;String&gt; titleList) {
+<span class="fc" id="L45">        Stream&lt;String&gt; stream1 = titleList.stream(); // converting ArrayList into Stream</span>
+<span class="fc" id="L46">        Stream&lt;String&gt; stream_char = titleList.stream(); // converting ArrayList into Stream</span>
+       
+
+        //Splitting stream on respect to &quot; &quot;
+<span class="fc" id="L50">        stream1 = stream1.flatMap(</span>
+           (value)-&gt;{
+<span class="fc" id="L52">           String[] split = value.split(&quot; &quot;);</span>
+<span class="fc" id="L53">           return (Stream&lt;String&gt;) Arrays.asList(split).stream();</span>
+                });
+               
+        
+        //stream.forEach(s -&gt; System.out.println(s)); // printing elements in Stream
+<span class="fc" id="L58">        stream_char = stream_char.flatMap(</span>
+                (value)-&gt;{
+<span class="fc" id="L60">                String[] splitc = value.split(&quot;&quot;);</span>
+<span class="fc" id="L61">                return (Stream&lt;String&gt;) Arrays.asList(splitc).stream();</span>
+                     });
+
+<span class="fc" id="L64">        c= stream1.map((value)-&gt;{</span>
+<span class="fc" id="L65">            return value.toLowerCase();}).count(); // total_words</span>
+<span class="fc" id="L66">        char_c =stream_char.map((value)-&gt;{</span>
+<span class="fc" id="L67">            return value.toLowerCase();}).count(); // total_words</span>
+<span class="fc" id="L68">        Stream&lt;String&gt; stream = titleList.stream(); // converting ArrayList into Stream</span>
+<span class="fc" id="L69">        stream = stream.flatMap(</span>
+            (value)-&gt;{
+<span class="fc" id="L71">            String[] split = value.split(&quot; &quot;);</span>
+<span class="fc" id="L72">            return (Stream&lt;String&gt;) Arrays.asList(split).stream();</span>
+                 });
+        //Mapping words with their frequency 
+<span class="fc" id="L75">        Map&lt;String, Integer&gt; wordsCountMap = stream.map(eachWord -&gt; eachWord)</span>
+<span class="fc" id="L76">        .collect(Collectors.toMap(w -&gt; w.toLowerCase(), w -&gt; 1, Integer::sum));       </span>
+    
+        
+        //Sorting the result in descending order
+<span class="fc" id="L80">        wordsCountMap = wordsCountMap.entrySet()</span>
+<span class="fc" id="L81">					.stream()</span>
+<span class="fc" id="L82">					.sorted(Map.Entry.&lt;String, Integer&gt; comparingByValue().reversed())</span>
+<span class="pc" id="L83">					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2)-&gt; e1, LinkedHashMap::new));</span>
+<span class="fc" id="L84">       unique = wordsCountMap.size();</span>
+<span class="fc" id="L85">       r = (c-unique);</span>
+        
+
+    //     Iterator&lt;String&gt; itr = wordsCountMap.keySet().iterator();
+    //     while (itr.hasNext()) {
+    //         System.out.println(itr.next());
+    // }
+
+<span class="fc" id="L93">    max_freq = wordsCountMap.entrySet().stream().findFirst().get().getValue();</span>
+<span class="fc" id="L94">    min_freq  = Collections.min(wordsCountMap.values());</span>
+<span class="fc" id="L95">    StatsModel n = new StatsModel(wordsCountMap);</span>
+        
+    // for( Map.Entry&lt;String, Integer&gt; entry : wordsCountMap.entrySet() ){
+    //     System.out.println( entry.getKey() + &quot; =&gt; &quot; + entry.getValue() );
+    // }
+<span class="fc" id="L100">    return n;</span>
+
+
+
+}
+public ArrayList&lt;Integer&gt; getstatsData() {
+
+<span class="fc" id="L107">    total_words = ((Long)c).intValue();        </span>
+<span class="fc" id="L108">    total_repetition =((Long)r).intValue();  </span>
+<span class="fc" id="L109">    total_char=((Long)char_c).intValue();</span>
+<span class="fc" id="L110">    unique_words= ((Long)unique).intValue();  </span>
+<span class="fc" id="L111">    calc.add(total_words);</span>
+<span class="fc" id="L112">    calc.add(total_repetition);</span>
+<span class="fc" id="L113">    calc.add(total_char);</span>
+<span class="fc" id="L114">    calc.add(unique_words);</span>
+<span class="fc" id="L115">    calc.add(max_freq);</span>
+<span class="fc" id="L116">    calc.add(min_freq);</span>
+    
+<span class="fc" id="L118">    return calc;</span>
+
+}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

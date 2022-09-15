@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TopicResultHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Models</a> &gt; <span class="el_source">TopicResultHelper.java</span></div><h1>TopicResultHelper.java</h1><pre class="source lang-java linenums">package Models;
+/**
+ * This class contains methods to format the data fetched from response and limit the search reults to 10
+ * to the application's home page.
+ *
+ * @author  Sejal Chopra
+ * @version 1.0.0
+ */
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import play.libs.Json;
+import play.libs.ws.WSClient;
+import play.libs.ws.WSRequest;
+
+
+<span class="fc" id="L28">public class TopicResultHelper{</span>
+	/**
+     * Defining the variables to be used
+     */
+	  
+    
+<span class="fc" id="L34">    public ArrayList&lt;String&gt; allSearches = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35">    LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; allResult = new LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt;();</span>
+<span class="fc" id="L36">    public HashMap&lt;String, JsonNode&gt; fullSearchData = new HashMap&lt;String, JsonNode&gt;();</span>
+
+    
+    
+    
+	/**
+	 * @param query
+	 * @param obj
+	 * @return allResults
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * 
+	 * This methods parses the required data from the API response and adds it to a list
+	 */
+	public LinkedHashMap&lt;String, ArrayList&lt;GithubResult&gt;&gt; getArrayofGithubResult(String query, JsonNode obj) throws InterruptedException, ExecutionException {
+<span class="fc" id="L51">		List&lt;GithubResult&gt; records = new ArrayList&lt;GithubResult&gt;();</span>
+<span class="fc" id="L52">		System.out.println(&quot;Size of Obj :: &quot;+obj.size());</span>
+		
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		for(JsonNode data:obj) {</span>
+<span class="fc" id="L55">			GithubResult result = new GithubResult(data.get(&quot;name&quot;).toString(),data.get(&quot;owner&quot;).findPath(&quot;login&quot;).toPrettyString(),data.get(&quot;topics&quot;),query, data.get(&quot;id&quot;).toString());</span>
+<span class="fc" id="L56">			fullSearchData.put(query, obj);</span>
+<span class="fc" id="L57">			records.add(result);			</span>
+<span class="fc" id="L58">		}</span>
+		
+<span class="fc" id="L60">		records = records.stream()</span>
+<span class="fc" id="L61">				.limit(10)</span>
+<span class="fc" id="L62">				.collect(Collectors.toList());</span>
+<span class="fc" id="L63">		addToTotalSearchList(query, (ArrayList&lt;GithubResult&gt;) records);</span>
+		
+<span class="fc" id="L65">		return allResult;</span>
+	}
+	
+	/**
+	 * @param query
+	 * @param singleRecord
+	 * 
+	 * Keeps only the latest topic results clicked by the user
+	 */
+	public void addToTotalSearchList(String query, ArrayList&lt;GithubResult&gt; singleRecord) {
+		
+<span class="fc bfc" id="L76" title="All 2 branches covered.">			if(allSearches.size()==1) {</span>
+<span class="fc" id="L77">				String removingQuery = allSearches.get(0);</span>
+<span class="fc" id="L78">				allResult.remove(removingQuery);</span>
+<span class="fc" id="L79">				allSearches.remove(0);</span>
+			}
+<span class="fc" id="L81">			allSearches.add(query);</span>
+<span class="fc" id="L82">			allResult.put(query, singleRecord);</span>
+		
+<span class="fc" id="L84">	System.out.println(allSearches.toString());</span>
+<span class="fc" id="L85">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

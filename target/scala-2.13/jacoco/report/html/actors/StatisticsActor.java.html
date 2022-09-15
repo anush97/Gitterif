@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StatisticsActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">actors</a> &gt; <span class="el_source">StatisticsActor.java</span></div><h1>StatisticsActor.java</h1><pre class="source lang-java linenums">package actors;
+
+import Models.*;
+import play.libs.Json;
+import services.StatsService;
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+import java.util.Iterator;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.*;
+/**
+ * @author Anushka Sharma
+ * create a new Akka Actor to perform the Word Level Statistics of Issues of a repository , together with appropriate message classes
+ * 
+ * @version 1.0.0
+ */
+<span class="fc" id="L30">public class StatisticsActor extends AbstractActor {</span>
+
+    static public class StatsInfo {
+
+		public final ArrayList&lt;String&gt; issueTitleList;
+    /**
+	 * Constructor to create instance of this actor.
+	 * 
+	 * @param issueTitleList
+	 */
+<span class="fc" id="L40">        public StatsInfo(ArrayList&lt;String&gt; issueTitleList) {</span>
+<span class="fc" id="L41">			this.issueTitleList = issueTitleList;</span>
+<span class="fc" id="L42">        }</span>
+    }
+	/**
+	 * Factory method to create instance of Word Stats Actor
+	 * @return Props
+	 */
+	public static Props getProps() {
+<span class="fc" id="L49">		return Props.create(StatisticsActor.class);</span>
+	}
+	
+	/**
+	 * It receives referrences and decides action based on them.
+	 * 
+	 */
+	@Override
+	public Receive createReceive() {
+		// TODO Auto-generated method stub
+<span class="fc" id="L59">		return receiveBuilder()</span>
+<span class="fc" id="L60">				.match(StatsInfo.class, this::sendIssueData )</span>
+<span class="fc" id="L61">				.build();</span>
+	}
+
+    /**
+	 * This method sends issue list data when queried by user to service 
+	 * Calculate total number or words in issues, total_repetition of words, total characters
+ 	 * max_frequency of a word, minimum frequency of a word, unique words as 
+ 	 * Statistics along with Map (key- words, value- count).
+	 */
+	private void sendIssueData(StatsInfo si) {
+<span class="nc" id="L71">		HashMap&lt;String,Object&gt; send_data = new HashMap&lt;String,Object&gt;();</span>
+			//StatsService statsService ;
+<span class="nc" id="L73">			StatsService statsService = new StatsService();</span>
+<span class="nc" id="L74">			StatsModel stats = statsService.get_Count(si.issueTitleList);</span>
+
+            // for (Map.Entry&lt;String, Integer&gt; entry1 : stats.wordfrequency.entrySet()) {
+			// 	System.out.println(entry1.getKey() + &quot; =&gt; &quot; + entry1.getValue());
+			// }
+			
+<span class="nc" id="L80">			System.out.println();</span>
+<span class="nc" id="L81">			System.out.println(&quot;Data List got&quot;);</span>
+<span class="nc" id="L82">			System.out.println();</span>
+			//
+<span class="nc" id="L84">			ArrayList&lt;Integer&gt; Isseus_details = statsService.getstatsData();</span>
+<span class="nc" id="L85">			System.out.println();</span>
+<span class="nc" id="L86">			System.out.println(&quot;Stats List got&quot;);</span>
+<span class="nc" id="L87">			System.out.println();</span>
+			//////////////////////////////
+<span class="nc" id="L89">			send_data.put(&quot;list&quot;,stats);</span>
+<span class="nc" id="L90">			send_data.put(&quot;count&quot;,Isseus_details);</span>
+<span class="nc" id="L91">			System.out.println(send_data.get(&quot;list&quot;));</span>
+<span class="nc" id="L92">			System.out.println(send_data.get(&quot;count&quot;));</span>
+<span class="nc" id="L93">			sender().tell(send_data, self());</span>
+	    
+		
+
+
+<span class="nc" id="L98">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

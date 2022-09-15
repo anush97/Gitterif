@@ -1,0 +1,97 @@
+@(results: Models.CommitsResult, keys: List[String], commitData: Map[String, Integer])
+
+<section style=" margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px">
+  <div class="header" style="padding: 30px;
+	  text-align: center;
+	  background: #1abc9c;
+	  color: white;
+	  font-size: 30px;">
+    
+  		<h2> Repository Commit Statistics</h2>
+	</div>
+		  <div class="container" style="display: flex;justify-content: center; ">
+			<div style="padding: 5px;margin: 20px;background-color:color:rgb(18, 105, 69);border-radius: 5px;">
+			  <table style="
+				border-collapse: collapse;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+				  
+				  <tbody style="background-color: #dee2e1; text-align: center;">
+					<tr style="height: 50px ;border: 1px solid rgb(20, 107, 71);">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Maximum no.of additions </td>
+						<td style="background-color: #dee2e1;width: 200px;">@results.maxAdd</td>
+  					</tr> 
+  					<tr   style="height: 50px ;border: 1px solid rgb(20, 107, 71);">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Minimum no.of additions</td>
+						<td style="background-color: #dee2e1; width: 200px;">@results.minAdd</td>
+					</tr>
+					<tr  style="height: 50px ;border: 1px solid rgb(20, 107, 71);">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Average no.of additions </td>
+						<td style="background-color: #dee2e1;width: 200px;">@results.avgAdd</td>
+					 </tr> 
+
+					  <tr  style="height: 50px ;border: 1px solid rgb(20, 107, 71);">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Maximum no.of deletions</td>
+						<td style="background-color: #dee2e1;width: 200px;">@results.maxDel</td>
+  					  </tr>
+  					   <tr  style="height: 50px ;border: 1px solid rgb(20, 107, 71);">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Minumum no.of deletions</td>
+						<td style="background-color: #dee2e1; width: 200px;">@results.minDel</td>
+						</tr>
+						<tr  style="height: 50px ;border: 1px solid rgb(20, 107, 71);">
+						<td style="background-color: rgb(20, 107, 71);color: #dee2e1;width: 200px;">Average no.of deletions</td>
+						<td style="background-color: #dee2e1;width: 200px;">@results.avgDel</td>
+					  </tr> 
+
+ 
+				  </tbody> 
+				</table>
+			</div>
+
+	
+	
+	 
+    
+      <div style="padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;">
+    <center>   <h3 style="margin-left: 25px; color:rgb(18, 105, 69);">Showing Top @keys.size() users with highest no.of commits</h3> </center>
+        <table style="width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+            <thead style="background-color: #42a386; padding: 10px; height:50px ;">
+              <tr>
+                <th style="border: 1px solid rgb(211, 211, 211);">User name</th>
+                <th  style="border: 1px solid rgb(211, 211, 211);">Commits count</th>
+				<th  style="border: 1px solid rgb(211, 211, 211);">User profile link</th>
+              </tr>
+            </thead>
+            <tbody style="background-color: #dee2e1; text-align: center;">
+              
+             @for(key<-keys){
+					<tr style="height: 50px ">									
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;">@key</td>
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;">@commitData.get(key)</td>	
+						<td style="border: 1px solid rgb(104, 207, 164);background-color: #dee2e1; padding: 30px;"><a href='/user/@key'>@key</td>					
+					</tr>				
+				}
+               
+            
+            </tbody> 
+          </table>
+        </div>
+         </div>
+	
+		
+</section>
+
+	<button style="display: block;
+	position: fixed;
+	top: 20px;
+	left: 30px;
+	z-index: 99;
+	font-size: 15px;
+	border: none;
+	outline: none;
+	background-color: rgb(218, 218, 218);
+	color: rgb(7, 75, 18) ;
+	cursor: pointer;
+	padding: 5px;" onclick="history.back()" title="Go Back"> ⬅ Back </button>

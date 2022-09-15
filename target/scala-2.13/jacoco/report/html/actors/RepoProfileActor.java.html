@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RepoProfileActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">actors</a> &gt; <span class="el_source">RepoProfileActor.java</span></div><h1>RepoProfileActor.java</h1><pre class="source lang-java linenums">package actors;
+
+import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+
+import java.util.concurrent.ExecutionException;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.inject.Inject;
+
+import play.Logger;
+import play.libs.Json;
+import Models.RepositoryProfile;
+import Models.SearchResultHelper;
+import services.RepoProfileService;
+import Utils.Cache;
+/**
+ * @author Elvin Rejimone
+ * Repository Actor containing all available details for a repository of a user
+ */
+<span class="fc" id="L22">public class RepoProfileActor extends AbstractActor{ </span>
+
+
+/**
+* get the user details and query string
+* storing and retrieving data from Cache
+*/
+	static public class RepoProfileInfo{
+		public final String queryString;
+		public final String repoID;
+		public final Cache cache;
+		public final RepoProfileService repoService;
+/**
+* Constructor of this Info class.
+*
+*/
+<span class="nc" id="L38">		public RepoProfileInfo(String queryString, String repoID, Cache cache,RepoProfileService repoServ) {</span>
+<span class="nc" id="L39">			this.queryString = queryString;</span>
+<span class="nc" id="L40">			this.repoID = repoID;</span>
+<span class="nc" id="L41">			this.cache = cache;</span>
+<span class="nc" id="L42">			this.repoService = repoServ;</span>
+<span class="nc" id="L43">		}</span>
+	}
+	
+	/**
+	 * Factory method to create instance of Repository Actor
+	 * @return Props
+	 */
+	public static Props getProps() {
+<span class="fc" id="L51">		return Props.create(RepoProfileActor.class);</span>
+	}
+	
+	/**
+	 * It receives referrences and decides action based on them.
+	 * 
+	 */
+	@Override
+	public Receive createReceive() {
+		// TODO Auto-generated method stub
+<span class="fc" id="L61">		return receiveBuilder()</span>
+<span class="fc" id="L62">				.match(RepoProfileInfo.class, this::sendRepoProfileData )</span>
+<span class="fc" id="L63">				.build();</span>
+	}
+	/**
+	* fetch details from service class - issue and collaborators
+	* @throws Exception
+	*/
+	private void sendRepoProfileData(RepoProfileInfo rpi) {
+		try {
+			
+<span class="nc" id="L72">			RepositoryProfile newRepository = new RepositoryProfile(SearchResultHelper.fullSearchData.get(rpi.queryString),rpi.queryString, rpi.repoID);        	</span>
+<span class="nc" id="L73">		    System.out.println(rpi.repoService.githubIssueResultHelper(newRepository.issues_URL, newRepository, &quot;Issues&quot;, rpi.cache));</span>
+<span class="nc" id="L74">		    System.out.println(rpi.repoService.githubIssueResultHelper(newRepository.contributors_URL, newRepository, &quot;Collab&quot;, rpi.cache));</span>
+<span class="nc" id="L75">		    System.out.println(&quot;REPO-ACTOR ::: RepoName ::&quot;+ newRepository.repoName);</span>
+<span class="nc" id="L76">		    sender().tell(newRepository, self());</span>
+		    
+		}
+<span class="nc" id="L79">		catch(InterruptedException e) {</span>
+<span class="nc" id="L80">			sender().tell(new RepoProfileInfo(rpi.queryString, rpi.repoID, rpi.cache, rpi.repoService), self());</span>
+		}
+<span class="nc" id="L82">		catch(ExecutionException e) {</span>
+<span class="nc" id="L83">			sender().tell(new RepoProfileInfo(rpi.queryString, rpi.repoID, rpi.cache, rpi.repoService), self());</span>
+<span class="nc" id="L84">		}</span>
+
+
+<span class="nc" id="L87">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

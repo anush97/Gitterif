@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>user.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">user.template.scala</span></div><h1>user.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="pc" id="L24">object user extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template2[HashMap[String, ArrayList[Models.GithubResult]],List[String],play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*1.2*/(results: HashMap[String, ArrayList[Models.GithubResult]], keys: List[String]):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L28">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L32">Seq[Any](format.raw/*1.80*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L34">&quot;&quot;&quot;),format.raw/*3.1*/(&quot;&quot;&quot;&lt;section style=&quot; margin: 0;background: linear-gradient(45deg, #7ab1af, #aea7ec);font-family: sans-serif;font-weight: 100; padding-bottom: 40px&quot;&gt;</span>
+  &lt;h1 style=&quot;text-align: center; font-size: 50px;&quot;&gt;Details of owner Repositories&lt;/h1&gt; 
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">  &quot;&quot;&quot;),_display_(/*5.4*/if(!results.isEmpty())/*5.26*/ {_display_(Seq[Any](format.raw/*5.28*/(&quot;&quot;&quot;    	</span>
+<span class="fc" id="L37">      &quot;&quot;&quot;),_display_(/*6.8*/for(key &lt;- keys) yield /*6.24*/{_display_(Seq[Any](format.raw/*6.25*/(&quot;&quot;&quot;</span>
+      &quot;&quot;&quot;),format.raw/*7.7*/(&quot;&quot;&quot;&lt;div class=&quot;container&quot; style=&quot;display: flex;justify-content: center; &quot;&gt;
+      &lt;div style=&quot;padding: 0px 40px 40px 40px;margin: 20px;background-color: rgb(211, 211, 211);border-radius: 5px;&quot;&gt;
+       &lt;center&gt; &lt;span&gt;Showing results for the topic: &lt;h1 style=&quot;display:inline-block;margin-left: 10px;&quot;&gt;&quot;&quot;&quot;),_display_(/*9.107*/key),format.raw/*9.110*/(&quot;&quot;&quot;&lt;/h1&gt; &lt;/span&gt;&lt;/center&gt;
+        &lt;table style=&quot;width:800px;
+          border-collapse: collapse;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);&quot;&gt;
+            &lt;thead style=&quot;background-color: #42a386; padding: 10px; height:50px ;&quot;&gt;
+      
+              &lt;div style=&quot;border: 1px solid rgb(104, 207, 164); text-align: center;&quot;&gt;&lt;span style=&quot; font-size: 40px; margin-right: 100px;&quot;&gt;User - &quot;&quot;&quot;),_display_(/*16.147*/key),format.raw/*16.150*/(&quot;&quot;&quot;&lt;/span&gt;&lt;img src=&quot;&quot;&quot;&quot;),_display_(/*16.168*/results/*16.175*/.get(key)/*16.184*/(0)/*16.187*/.ownerName),format.raw/*16.197*/(&quot;&quot;&quot;&quot; alt=&quot;Avatar&quot; width=&quot;100&quot; height=&quot;100&quot;&gt;&lt;/div&gt;
+      
+              &lt;tr&gt;
+                
+                &lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Repositories&lt;/th&gt;
+                &lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Description&lt;/th&gt;
+                &lt;th style=&quot;border: 1px solid rgb(211, 211, 211);&quot;&gt;Repo Topics&lt;/th&gt;
+                
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody style=&quot;background-color: #dee2e1; text-align: center;&quot;&gt;
+              
+              &quot;&quot;&quot;),_display_(/*28.16*/for(obj &lt;- results.get(key) ) yield /*28.45*/{_display_(Seq[Any](format.raw/*28.46*/(&quot;&quot;&quot;
+              &quot;&quot;&quot;),format.raw/*29.15*/(&quot;&quot;&quot;&lt;tr style=&quot;height: 50px &quot;&gt;
+                &lt;td style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;&lt;a href=&quot;/&quot;&gt;&quot;&quot;&quot;),_display_(/*30.80*/obj/*30.83*/.repoName),format.raw/*30.92*/(&quot;&quot;&quot;&lt;/a&gt;&lt;/td&gt;
+                &lt;td style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;&quot;&quot;&quot;),_display_(/*31.68*/obj/*31.71*/.repoID),format.raw/*31.78*/(&quot;&quot;&quot;&lt;/td&gt;
+                &lt;td style=&quot;border: 1px solid rgb(104, 207, 164);&quot;&gt;
+                  &quot;&quot;&quot;),_display_(/*33.20*/for(topic &lt;- obj.returnTopics()) yield /*33.52*/{_display_(Seq[Any](format.raw/*33.53*/(&quot;&quot;&quot;
+                   &quot;&quot;&quot;),format.raw/*34.20*/(&quot;&quot;&quot;&lt;div style=&quot;display: inline-block;background-color: #0b7e5b;color: #dee2e1; border-radius:6px; padding: 3px; margin-right: 3px; margin-top: 3px;margin-bottom: 3px;&quot;&gt; &quot;&quot;&quot;),_display_(/*34.187*/topic),format.raw/*34.192*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*34.193*/(&quot;&quot;&quot;&lt;/div&gt; 
+                  &quot;&quot;&quot;)))}),format.raw/*35.20*/(&quot;&quot;&quot;
+                &quot;&quot;&quot;),format.raw/*36.17*/(&quot;&quot;&quot;&lt;/td&gt;
+              &lt;/tr&gt;
+              &quot;&quot;&quot;)))}),format.raw/*38.16*/(&quot;&quot;&quot;
+               
+            
+            &quot;&quot;&quot;),format.raw/*41.13*/(&quot;&quot;&quot;&lt;/tbody&gt; 
+          &lt;/table&gt;
+        &lt;/div&gt;
+         &lt;/div&gt;
+        
+<span class="fc" id="L77">        &quot;&quot;&quot;)))}),format.raw/*46.10*/(&quot;&quot;&quot;</span>
+
+<span class="pc" id="L79">&quot;&quot;&quot;)))}/*48.3*/else/*48.8*/{_display_(Seq[Any](format.raw/*48.9*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L80">  &quot;&quot;&quot;),format.raw/*49.3*/(&quot;&quot;&quot;&lt;h1&gt;Not Displaying&lt;/h1&gt;</span>
+<span class="fc" id="L81">&quot;&quot;&quot;)))}),format.raw/*50.2*/(&quot;&quot;&quot;</span>
+  
+<span class="fc" id="L83">&quot;&quot;&quot;),format.raw/*52.1*/(&quot;&quot;&quot;&lt;/section&gt;</span>
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="fc" id="L89">  def render(results:HashMap[String, ArrayList[Models.GithubResult]],keys:List[String]): play.twirl.api.HtmlFormat.Appendable = apply(results,keys)</span>
+
+<span class="nc" id="L91">  def f:((HashMap[String, ArrayList[Models.GithubResult]],List[String]) =&gt; play.twirl.api.HtmlFormat.Appendable) = (results,keys) =&gt; apply(results,keys)</span>
+
+<span class="nc" id="L93">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  SOURCE: app/views/user.scala.html
+                  HASH: 8693c5424f8d1a4d4c79180f3a9e7f01d2793ee3
+                  MATRIX: 960-&gt;1|1133-&gt;79|1163-&gt;83|1425-&gt;320|1455-&gt;342|1494-&gt;344|1533-&gt;358|1564-&gt;374|1602-&gt;375|1636-&gt;383|1961-&gt;681|1985-&gt;684|2436-&gt;1107|2461-&gt;1110|2507-&gt;1128|2524-&gt;1135|2543-&gt;1144|2556-&gt;1147|2588-&gt;1157|3130-&gt;1672|3175-&gt;1701|3214-&gt;1702|3258-&gt;1718|3392-&gt;1825|3404-&gt;1828|3434-&gt;1837|3539-&gt;1915|3551-&gt;1918|3579-&gt;1925|3700-&gt;2019|3748-&gt;2051|3787-&gt;2052|3836-&gt;2073|4031-&gt;2240|4058-&gt;2245|4088-&gt;2246|4147-&gt;2274|4193-&gt;2292|4267-&gt;2335|4340-&gt;2380|4454-&gt;2463|4477-&gt;2469|4489-&gt;2474|4527-&gt;2475|4558-&gt;2479|4614-&gt;2505|4647-&gt;2511
+                  LINES: 27-&gt;1|32-&gt;1|34-&gt;3|36-&gt;5|36-&gt;5|36-&gt;5|37-&gt;6|37-&gt;6|37-&gt;6|38-&gt;7|40-&gt;9|40-&gt;9|47-&gt;16|47-&gt;16|47-&gt;16|47-&gt;16|47-&gt;16|47-&gt;16|47-&gt;16|59-&gt;28|59-&gt;28|59-&gt;28|60-&gt;29|61-&gt;30|61-&gt;30|61-&gt;30|62-&gt;31|62-&gt;31|62-&gt;31|64-&gt;33|64-&gt;33|64-&gt;33|65-&gt;34|65-&gt;34|65-&gt;34|65-&gt;34|66-&gt;35|67-&gt;36|69-&gt;38|72-&gt;41|77-&gt;46|79-&gt;48|79-&gt;48|79-&gt;48|80-&gt;49|81-&gt;50|83-&gt;52
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
