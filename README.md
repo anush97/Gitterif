@@ -56,7 +56,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Classify issue
-        run: python gitterif.py --token ${{ secrets.GITHUB_TOKEN }} --owner ${{ github.event.repository.owner.login }} --repo ${{ github.event.repository.name }} --issue ${{ github.event.issue.number }}```
+        run: python gitterif.py --token ${{ secrets.GITHUB_TOKEN }} --owner ${{ github.event.repository.owner.login }} --repo ${{ github.event.repository.name }} --issue ${{ github.event.issue.number }}
+```
         
 3.Replace your-github-username with your own GitHub username.
 
