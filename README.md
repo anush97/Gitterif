@@ -63,7 +63,7 @@ jobs:
 
 4.Push the changes to your target repository, and Gitterif will start automatically labeling new issues.
 
-##Training Your Model
+## Training the model
 
 1. Prepare your training data in the following format:
 issue_title_1, issue_body_1, label_1
