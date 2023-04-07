@@ -1,35 +1,72 @@
-# Play Hello World Web Tutorial for Java
+# Gitterif - GitHub Issue Classifier
 
-To follow the steps in this tutorial, you will need the correct version of Java and a build tool. You can build Play projects with any Java build tool. Since sbt takes advantage of Play features such as auto-reload, the tutorial describes how to build the project with sbt. 
+Gitterif is a GitHub Issue Classifier that uses machine learning to automatically categorize and label issues in your GitHub repositories. The goal is to save time and improve issue management by automatically predicting the most appropriate labels for each issue.
 
-Prerequisites include:
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Training Your Model](#training-your-model)
+- [Contributing](#contributing)
+- [License](#license)
 
-* Java Software Developer's Kit (SE) 1.8 or higher
-* sbt 0.13.15 or higher (we recommend 1.2.3) Note: if you downloaded this project as a zip file from https://developer.lightbend.com, the file includes an sbt distribution for your convenience.
+## Features
+- Automatically label GitHub issues based on their content.
+- Train custom classification models using your own data.
+- Easy integration with GitHub using GitHub Actions.
 
-To check your Java version, enter the following in a command window:
+## Installation
 
-`java -version`
+1. Clone the repository:
+2. Install the required dependencies:
+pip install -r requirements.txt
 
-To check your sbt version, enter the following in a command window:
 
-`sbt sbtVersion`
+## Usage
 
-If you do not have the required versions, follow these links to obtain them:
+1. Fork the Gitterif repository to your own GitHub account.
+2. Set up a GitHub Action to use Gitterif whenever a new issue is created:
+- Create a new `.github/workflows/issue_classifier.yml` file in your target repository.
+- Copy and paste the following content into the `issue_classifier.yml` file:
+```yaml
+name: Gitterif Issue Classifier
 
-* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [sbt](http://www.scala-sbt.org/download.html)
+on:
+  issues:
+    types: [opened]
 
-## Build and run the project
+jobs:
+  classify_issue:
+    runs-on: ubuntu-latest
 
-This example Play project was created from a seed template. It includes all Play components and an Akka HTTP server. The project is also configured with filters for Cross-Site Request Forgery (CSRF) protection and security headers.
+    steps:
+      - name: Checkout Gitterif
+        uses: actions/checkout@v2
+        with:
+          repository: your-github-username/Gitterif
+          ref: main
 
-To build and run the project:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
 
-1. Use a command window to change into the example project directory, for example: `cd play-java-hello-world-web`
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
 
-2. Build the project. Enter: `sbt run`. The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends partly on your connection's speed.
+      - name: Classify issue
+        run: python gitterif.py --token ${{ secrets.GITHUB_TOKEN }} --owner ${{ github.event.repository.owner.login }} --repo ${{ github.event.repository.name }} --issue ${{ github.event.issue.number }}
+3.Replace your-github-username with your own GitHub username.
+4.Push the changes to your target repository, and Gitterif will start automatically labeling new issues.
+##Training Your Model
+1. Prepare your training data in the following format:
+issue_title_1, issue_body_1, label_1
+issue_title_2, issue_body_2, label_2
+...
+Save the file as training_data.csv.
 
-3. After the message `Server started, ...` displays, enter the following URL in a browser: <http://localhost:9000>
+2. Train your model using the training data:
+python train_model.py --data training_data.csv --model model.pkl
 
-The Play application responds: `Welcome to the Hello World Tutorial!`
+3.Replace the model.pkl file in the Gitterif repository with your newly trained model.
