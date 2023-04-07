@@ -56,17 +56,22 @@ jobs:
           pip install -r requirements.txt
 
       - name: Classify issue
-        run: python gitterif.py --token ${{ secrets.GITHUB_TOKEN }} --owner ${{ github.event.repository.owner.login }} --repo ${{ github.event.repository.name }} --issue ${{ github.event.issue.number }}
+        run: python gitterif.py --token ${{ secrets.GITHUB_TOKEN }} --owner ${{ github.event.repository.owner.login }} --repo ${{ github.event.repository.name }} --issue ${{ github.event.issue.number }}```
+        
 3.Replace your-github-username with your own GitHub username.
+
 4.Push the changes to your target repository, and Gitterif will start automatically labeling new issues.
+
 ##Training Your Model
+
 1. Prepare your training data in the following format:
 issue_title_1, issue_body_1, label_1
 issue_title_2, issue_body_2, label_2
 ...
+
 Save the file as training_data.csv.
 
 2. Train your model using the training data:
-python train_model.py --data training_data.csv --model model.pkl
+`python train_model.py --data training_data.csv --model model.pkl`
 
 3.Replace the model.pkl file in the Gitterif repository with your newly trained model.
